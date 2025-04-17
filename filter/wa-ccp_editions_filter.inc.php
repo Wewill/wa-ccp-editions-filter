@@ -246,68 +246,6 @@ class ccp_editions_filter {
 
 	public function display_editions_filter() {
 		$css = "<style type='text/css'> 
-		         .editions-filter { margin-top: -3px !important; position:relative; }
-         
-				select.editions-filter {
-					 background:url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' style=\'fill:#eee; stroke:none\' width=\'50px\' height=\'50px\'><polyline points=\'46.139,15.518 25.166,36.49 4.193,15.519\'/></svg>');
-					background-color:transparent;
-					background-repeat:no-repeat;
-					background-position: right 4px top 8px;
-					background-size: 10px 10px;
-					
-					padding:1px 6px !important;
-					padding-right: 18px !important;
-					line-height: 20px !important;
-					width:auto !important;
-					
-					/* font-weight:bold !important; */
-					color:#efd589;
-					
-					text-align:left;
-					
-					border-radius: 3px !important;
-						-webkit-border-radius: 3px !important;
-						-moz-border-radius: 3px !important;
-					
-						/* -webkit-appearance: none; */
-					border:2px solid #efd589; //#a0a5aa
-					outline:0;
-					-webkit-transition:0.3s ease all !important;
-					   -moz-transition:0.3s ease all !important;
-					    -ms-transition:0.3s ease all !important;
-					     -o-transition:0.3s ease all !important;
-					        transition:0.3s ease all !important;
-					        
-					
-					box-sizing: border-box !important;
-				}
-				
-				@media screen and (-webkit-min-device-pixel-ratio:0) { 
-					// Safari hack 
-					select.editions-filter {
-						-webkit-appearance: none;
-					}
-				}
-				
-				_::-webkit-full-page-media, _:future, :root select.editions-filter {
-						-webkit-appearance: none;
-				}
-
-				select.editions-filter:hover {
-					background-color:#efd589;
-					color:black;
-				}
-				
-				select.editions-filter:focus, select.editions-filter:active {
-					outline:0;
-				}
-
-
-		         .button-link.button-online { 
-					  color:white!important;
-					  display:inline-block!important;
-					  margin-left:5px!important;
-		         } 
 				
 								   
         </style>";
@@ -316,8 +254,13 @@ class ccp_editions_filter {
 	
 	
 		$html = '<form method="POST" id="ccp_editions_filter_bar_form">';
-		// $html .= "c:".$this->current_edition;
-		// $html .= "s:".$edition['slug'];
+		/* Badge */ 
+		$html = '<span class="badge-editions-filter dashicons-before dashicons-image-filter" aria-hidden="true"></span>';
+		if ( WA_CCPEF_DEBUG === true ) {
+			$html .= "<code class='debug'>c:".$this->current_edition."</code>";
+			$html .= "<code class='debug'>s:".$edition['slug']."</code>";
+		}
+		/* Select button */
 		$html .= '<select class="editions-filter" name="ccp_editions_filter_bar_edition_term_slug" onchange="jQuery(\'#ccp_editions_filter_bar_form\').submit();">';
 		foreach($this->__editions as $edition) {
 			$html .= '<option value="'.$edition['slug'].'"'.(($this->current_edition == $edition['slug'])?' selected="selected"':'').'>'.$edition['description'].(($this->year_current_edition == $edition['slug'])?' *':'').'</option>';

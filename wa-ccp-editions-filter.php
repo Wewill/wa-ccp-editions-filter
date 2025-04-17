@@ -38,6 +38,7 @@ if ( !is_login() && is_admin() && !function_exists('mb_settings_page_load') ) {
  * Rename this for your plugin and update it as you release new versions.
  */
 define('WA_CCPEF_VERSION', '2.0.0');
+define('WA_CCPEF_DEBUG', false);
 
 // Load text domain
 // -------------------
@@ -68,6 +69,9 @@ function wa_ccpef_load() {
 
 	/* Load settings page */
 	require_once(WA_CCPEF_DIR . 'includes/wa-ccp_editions_settings.inc.php');
+
+	/* Load title badge */
+	require_once(WA_CCPEF_DIR . 'includes/wa-ccp_editions_title.inc.php');
 
 	/* Load editions filter class */
 	require_once(WA_CCPEF_DIR . 'filter/wa-ccp_editions_filter.inc.php');
