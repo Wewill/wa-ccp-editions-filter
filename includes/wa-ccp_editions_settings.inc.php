@@ -1,0 +1,124 @@
+<?php
+/*
+Define admin settings
+*/
+
+add_filter( 'mb_settings_pages', 'wa_ccpef_settings' );
+
+function wa_ccpef_settings( $settings_pages ) {
+	$settings_pages[] = [
+        'menu_title'      => __( 'Archives & edition filter', 'wa_ccpef' ),
+        'id'              => 'archives-edition-filter',
+        'position'        => 50,
+        'parent'          => 'options-general.php',
+        'class'           => 'wa_ccpef',
+        'tabs'            => [
+            'edition'  => 'Edition',
+            'archives' => 'Archives',
+        ],
+        'tab_style'       => 'left',
+        // 'help_tabs'       => [
+        //     [
+        //         'title'   => 'Help me !',
+        //         'content' => 'Lorem ipsum...',
+        //     ],
+        // ],
+        'customizer'      => false,
+        'customizer_only' => false,
+        'network'         => false,
+        'icon_url'        => 'dashicons-filter',
+    ];
+
+	return $settings_pages;
+}
+
+add_filter( 'rwmb_meta_boxes', 'wa_ccpef_settings_fields' );
+
+function wa_ccpef_settings_fields( $meta_boxes ) {
+    $prefix = 'wa_ccpef_';
+
+    $meta_boxes[] = [
+        'title'          => __( 'Edition settings', 'wa_ccpef' ),
+        'id'             => 'edition-settings',
+        'settings_pages' => ['archives-edition-filter'],
+        'tab'            => 'edition',
+        'fields'         => [
+            [
+                'name'              => __( 'Choose edition filter name', 'wa_ccpef' ),
+                'id'                => $prefix . 'choose_edition_filter_name',
+                'type'              => 'text',
+                'std'               => __( 'Édition', 'wa_ccpef' ),
+                'required'          => true,
+                'disabled'          => false,
+                'readonly'          => false,
+                'clone'             => false,
+                'clone_empty_start' => false,
+                'hide_from_rest'    => false,
+                'limit_type'        => 'character',
+            ],
+            [
+                'name'            => __( 'Allowed post type.s', 'wa_ccpef' ),
+                'id'              => $prefix . 'allowed_post',
+                'type'            => 'checkbox_list',
+                'inline'          => true,
+                'select_all_none' => true,
+                'options'         => wa_ccpef_posts_options_callback(),
+            ],
+            [
+                'name'            => __( 'Allowed taxonomy.s', 'wa_ccpef' ),
+                'id'              => $prefix . 'allowed_taxonomy',
+                'type'            => 'checkbox_list',
+                'inline'          => true,
+                'select_all_none' => true,
+                'options'         => wa_ccpef_taxonomies_options_callback(),
+            ],
+        ],
+    ];
+
+    $meta_boxes[] = [
+        'title'          => __( 'Archives settings', 'wa_ccpef' ),
+        'id'             => 'archives-settings',
+        'settings_pages' => ['archives-edition-filter'],
+        'tab'            => 'archives',
+        'fields'         => [
+            [
+                'name'              => __( 'Choose archives name', 'wa_ccpef' ),
+                'id'                => $prefix . 'choose_archives_name',
+                'type'              => 'text',
+                'std'               => __( 'Archives', 'wa_ccpef' ),
+                'required'          => true,
+                'disabled'          => false,
+                'readonly'          => false,
+                'clone'             => false,
+                'clone_empty_start' => false,
+                'hide_from_rest'    => false,
+                'limit_type'        => 'character',
+            ],
+        ],
+    ];
+
+    return $meta_boxes;
+}
+
+function wa_ccpef_posts_options_callback() {
+    return get_post_types();
+}
+
+function wa_ccpef_taxonomies_options_callback() {
+    $taxonomies = get_taxonomies();
+    $options = [];
+    foreach ( $taxonomies as $taxonomy ) {
+        $options[ $taxonomy ] = __( $taxonomy, 'wa_ccpef' );
+    }
+    return $options;
+}
+
+function wa_ccpef_get_posts_from_setting_page() {
+    $prefix = 'wa_ccpef_';
+    return rwmb_meta( $prefix . 'allowed_post', [ 'object_type' => 'setting' ], 'archives-edition-filter' );
+}
+
+function wa_ccpef_get_taxonomies_from_setting_page() {
+    $prefix = 'wa_ccpef_';
+    return rwmb_meta( $prefix . 'allowed_taxonomy', [ 'object_type' => 'setting' ], 'archives-edition-filter' );
+}

@@ -37,24 +37,50 @@ if ( !is_login() && is_admin() && !function_exists('mb_settings_page_load') ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'WA_CCPEF_VERSION', '2.0.0' );
+define('WA_CCPEF_VERSION', '2.0.0');
+
+// Load text domain
+// -------------------
+define('WA_CCPEF_DIR', plugin_dir_path( __FILE__ ) );
+define('WA_CCPEF_PO_PLUGINPATH', '/' . dirname(plugin_basename( __FILE__ )));
+define('WA_CCPEF_TEXTDOMAIN', 'wace');
+
+add_action('plugins_loaded', 'wa_ccpef_load_textdomain');
+function wa_ccpef_load_textdomain() {
+	load_plugin_textdomain( WA_CCPEF_TEXTDOMAIN, false, WA_CCPEF_PO_PLUGINPATH.'/languages/' );
+}
+
+// General admin styles
+// -------------------
+add_action( 'admin_enqueue_scripts', 'wa_ccpef_admin_styles' );
+function wa_ccpef_admin_styles() {
+	wp_enqueue_style( 'wa-ccpef-admin-style', plugins_url( '/css/admin-style.css', __FILE__ ) );
+}
 
 
-add_action('plugins_loaded', 'wa_ccp_editions_filter');
+add_action('plugins_loaded', 'wa_ccpef_load');
+function wa_ccpef_load() {
+	/* Migrate from old versions */
+	require_once(WA_CCPEF_DIR . 'includes/wa-ccp_editions_migrate.inc.php');
 
-function wa_ccp_editions_filter() {
+	/* Register Edition taxonomy */
+	require_once(WA_CCPEF_DIR . 'includes/wa-ccp_editions_register.inc.php');
+
+	/* Load settings page */
+	require_once(WA_CCPEF_DIR . 'includes/wa-ccp_editions_settings.inc.php');
+
 	/* Load editions filter class */
-	require_once(plugin_dir_path( __FILE__ ) . '/filter/ccp_editions_filter.inc.php');
+	require_once(WA_CCPEF_DIR . 'filter/wa-ccp_editions_filter.inc.php');
 	$ccpef = new ccp_editions_filter();
 	$ccpef->run();
 
 	/* Admin filter */
 	if ( is_admin() ) {
-		include(plugin_dir_path( __FILE__ ) . '/filter/ccp_editions_pre_get_posts.php');
+		// include(WA_CCPEF_DIR . 'filter/wa-ccp_editions_pre_get_posts.php');
 	}
 
 	/* Frontend filter */
 	if ( ! is_admin() ) {
-		include(plugin_dir_path( __FILE__ ) . '/archives/ccp_editions_archives.php');
+		include(WA_CCPEF_DIR . 'archives/wa-ccp_editions_archives.php');
 	}
 }

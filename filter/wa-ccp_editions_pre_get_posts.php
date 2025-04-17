@@ -53,12 +53,12 @@ function filter_ticket_pages($query) {
 	if ( get_edition()[0] === '-1') return $query;
 	if ( $q_vars_post_type == 'ticket' && $query->is_main_query() && (!array_key_exists('edition', $_GET) || $_GET['edition'] == '' || $_GET['edition'] == 'current') && (!array_key_exists('board', $_GET) || $_GET['board'] == '' ))
 		$query->set( 'tax_query', 	array(
-										array(
-											'taxonomy' => 'edition',
-											'field'    => 'slug',
-											'terms'    => get_edition()[0],
-										),
-									)
+				array(
+					'taxonomy' => 'edition',
+					'field'    => 'slug',
+					'terms'    => get_edition()[0],
+				),
+			)
 		);
 	return $query;
 }
