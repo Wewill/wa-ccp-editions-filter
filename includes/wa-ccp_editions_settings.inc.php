@@ -101,13 +101,34 @@ function wa_ccpef_settings_fields( $meta_boxes ) {
 }
 
 function wa_ccpef_posts_options_callback() {
-    return get_post_types();
+    $post_types = get_post_types();
+    $options = [];
+    foreach ( $post_types as $post_type ) {
+        // Exclude default post types
+        if ( in_array( $post_type, [ 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation', 'wp_font_family', 'wp_font_face', 'mb-post-type', 'mb-taxonomy', 'mb-settings-page', 'coblocks_pattern', 'meta-box'] ) ) {
+            continue;
+        }
+        // Exclude custom post types
+        if ( in_array( $post_type, [ '' ] ) ) {
+            continue;
+        }
+        $options[ $post_type ] = __( $post_type, 'wa_ccpef' );
+    }
+    return $options;
 }
 
 function wa_ccpef_taxonomies_options_callback() {
     $taxonomies = get_taxonomies();
     $options = [];
     foreach ( $taxonomies as $taxonomy ) {
+        // Exclude default taxonomies
+        if ( in_array( $taxonomy, [ 'link_category', 'post_format', 'wp_theme', 'wp_template_part_area', 'wp_pattern_category', 'coblocks_pattern_type', 'coblocks_pattern_category' ] ) ) {
+            continue;
+        }
+        // Exclude custom taxonomies
+        if ( in_array( $taxonomy, [ 'edition' ] ) ) {
+            continue;
+        }
         $options[ $taxonomy ] = __( $taxonomy, 'wa_ccpef' );
     }
     return $options;
