@@ -1,4 +1,7 @@
 <?php
+/*
+Filter
+*/
 
 add_action( 'load-edit.php', function() {
     if( is_admin()) {
