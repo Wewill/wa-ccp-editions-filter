@@ -5,7 +5,10 @@ Adds an icon (filter dashicons) before the title of the post types and taxonomie
 
 add_action('admin_head', function () {
 	$screen = get_current_screen();
-	if ($screen && in_array($screen->post_type, wa_ccpef_get_posts_from_setting_page()) || $screen && in_array($screen->taxonomy, wa_ccpef_get_taxonomies_from_setting_page())) {
+	if ($screen && in_array($screen->post_type, wa_ccpef_get_posts_from_setting_page()) 
+		|| $screen && in_array($screen->taxonomy, wa_ccpef_get_taxonomies_from_setting_page())
+		|| $screen && $screen->post_type === 'attachment' && wa_ccpef_get_filtermedias_from_setting_page() === 1
+	) {
 		echo '<style>
 			#screen-meta-links::before {
 				content: "\f533";

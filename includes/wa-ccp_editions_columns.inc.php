@@ -108,7 +108,50 @@ function wa_ccpef_taxonomy_custom_column($out, $column_name, $term_id) {
     return $out;    
 }
 
-//Get post terms
+/**
+ * Edition ( taxonomy )
+ */
+
+add_filter( 'manage_edit-edition_columns', 'wa_ccpef_taxonomy_edition_columns' ) ;
+function wa_ccpef_taxonomy_edition_columns( $columns ) {
+	//$columns['p_general_image'] = __( 'Image', 'wa-rsfp');
+
+	$newcols = array();
+	foreach($columns as $col_key => $col_title) {
+		print( $col_key );
+		if ($col_key=='name') // Put the Thumbnail column before the Title column
+			$newcols['e-image'] = __('<span class="dashicons-before dashicons-visibility" style="color:silver;"></span>', 'wa-rsfp');
+			if ($col_key=='description') // Put the Thumbnail column before the Desc. column
+			$newcols['e-color'] = __('Color', 'wa-rsfp');
+		$newcols[$col_key] = $col_title;
+	}
+	return $newcols;
+	//return $columns;
+}
+
+add_filter( 'manage_edition_custom_column', 'wa_ccpef_taxonomy_manage_edition_columns', 10, 3);
+function wa_ccpef_taxonomy_manage_edition_columns($out, $column_name, $term_id) {
+	$out = '';
+	$prefix = 'waccpef-';
+    switch ($column_name) {
+		case 'e-image' :
+			wa_ccpef_get_image_fromid(get_term_meta( $term_id, $prefix . $column_name, true));			
+			break;
+		case 'e-color' :
+			wa_ccpef_get_color(get_term_meta( $term_id, $prefix . $column_name, true));			
+			break;
+			default:
+            break;
+    }
+    return $out;    
+}
+
+
+/**
+ * Functions 
+ */
+
+ //Get post terms
 function get_edition_post_terms($post_id, $taxonomy) {
 	$terms = get_the_terms( $post_id, $taxonomy );
 	if ( !empty( $terms ) ) {
@@ -124,12 +167,38 @@ function get_edition_post_terms($post_id, $taxonomy) {
 // Get term meta
 function get_edition_termmeta($taxonomy, $term_id) {
 	$meta = get_term_meta($term_id, $taxonomy, true );
-	$term = get_term( $meta, 'edition');
-	if ( empty( $term ) || is_wp_error( $term ) || $term->name == '' )
+	// If meta is a single value, get the term
+	if ( !is_array( $meta ) && !empty( $meta ) ) {
+		$meta = array( $meta );
+	}
+	
+	if ( empty( $meta ) || is_wp_error( $meta ) ) //|| $term->name == '' 
 		echo __( '<span style="color:silver;">—</span>' );
+	else {
+		foreach ( $meta as $term_id ) {
+			$term = get_term( $term_id, 'edition');
+			$term_link = get_term_link( $term);
+			printf('<span class="editions-tag"><span class="dashicons dashicons-image-filter" aria-hidden="true"></span> <a href="%s">%s</a></span>',
+				esc_url( $term_link ),
+				esc_html( $term->name ),
+			);
+		}
+	}
+}
+
+// Get Image 
+function wa_ccpef_get_image_fromid($attachment_id) {
+	$image = wp_get_attachment_image_src( $attachment_id, 'thumbnail');
+	if ( empty( $image ) )
+		echo __( '<span class="empty">—</span>' ); // marker.png
 	else
-		printf('<span class="editions-tag"><span class="dashicons dashicons-image-filter" aria-hidden="true"></span> <a href="%s">%s</a></span>',
-			esc_url( $term_link ),
-			esc_html( $term->name ),
-		);
+		printf( __( '<div class="tax-img-holder"><img class="wpcf-offre-visuel" src="%s" alt="Image" width="50" /></div>' ), $image[0] );
+}
+
+// Get color 
+function wa_ccpef_get_color($fd) {
+	if ( empty( $fd ) )
+		echo __( '<span style="color:silver;">—</span>' ); // marker.png
+	else
+		printf( __( '<div style="background-color:%s;border:1px solid #bababa;width:20px;height:20px;"></span>' ), $fd );
 }
