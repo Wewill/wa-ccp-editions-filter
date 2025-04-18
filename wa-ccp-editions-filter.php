@@ -70,6 +70,9 @@ function wa_ccpef_load() {
 	/* Register Edition taxonomy */
 	require_once(WA_CCPEF_DIR . 'includes/wa-ccp_editions_register.inc.php');
 
+	/* Load custom columns */
+	require_once(WA_CCPEF_DIR . 'includes/wa-ccp_editions_columns.inc.php');
+
 	/* Load getters & shortcodes */
 	require_once(WA_CCPEF_DIR . 'includes/wa-ccp_editions_getters.inc.php');
 

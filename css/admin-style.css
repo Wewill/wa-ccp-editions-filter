@@ -7,6 +7,27 @@
     color: rgb(0, 242, 255);
 }
 
+span.editions-tag {
+    display: inline-block;
+    background-color: #efd589;
+    height: 18px;
+    text-align: center;
+    padding: 6px;
+    color: #9a7300;
+    border-radius: 5px;
+    margin-top: 4px;
+}
+
+span.editions-tag span.dashicons {
+    display: inline;
+}
+
+span.editions-tag a {
+    color: #9a7300;
+    text-decoration: none;
+    font-weight: bold;
+}
+
 .badge-editions-filter::before {
        margin-right: 5px;
        display: inline-block;
