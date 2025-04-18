@@ -11,11 +11,13 @@ add_action( 'load-edit.php', function() {
 });
 
 add_action( 'init', function() {
-	// Limit medias menu 
-	add_filter( 'pre_get_posts', 'filter_medias' ); // #43 not working  > #44 ok 
-	// Limit medias modal window 
-	add_filter( 'ajax_query_attachments_args', 'ajax_filter_medias', 10, 1 );
-});
+	if ( wa_ccpef_get_filtermedias_from_setting_page() === 1 ) {
+		// Limit medias 
+		add_filter( 'pre_get_posts', 'filter_medias' ); // #43 not working  > #44 ok 
+		// Limit medias modal window 
+		add_filter( 'ajax_query_attachments_args', 'ajax_filter_medias', 10, 1 );
+	}
+}, 20);
 
 function filter_posts($query) {
     global $ccp_editions_filter;

@@ -75,6 +75,17 @@ function wa_ccpef_settings_fields( $meta_boxes ) {
                 'select_all_none' => true,
                 'options'         => wa_ccpef_taxonomies_options_callback(),
             ],
+            [
+                'name'              => __( 'Filter Medias by edition year ?', 'wa_ccpef' ),
+                'id'                => $prefix . 'filter_medias_by_edition_year',
+                'type'              => 'switch',
+                'label_description' => __( 'Check if you want to filter all medias by year of the edition, and switch between medias by switching edition', 'wa_ccpef' ),
+                'std'               => true,
+                'required'          => false,
+                'clone'             => false,
+                'clone_empty_start' => false,
+                'hide_from_rest'    => false,
+            ],
         ],
     ];
 
@@ -145,4 +156,9 @@ function wa_ccpef_get_posts_from_setting_page() {
 function wa_ccpef_get_taxonomies_from_setting_page() {
     $prefix = 'wa_ccpef_';
     return rwmb_meta( $prefix . 'allowed_taxonomy', [ 'object_type' => 'setting' ], 'archives-edition-filter' );
+}
+
+function wa_ccpef_get_filtermedias_from_setting_page() {
+    $prefix = 'wa_ccpef_';
+    return rwmb_meta( $prefix . 'filter_medias_by_edition_year', [ 'object_type' => 'setting' ], 'archives-edition-filter' );
 }
