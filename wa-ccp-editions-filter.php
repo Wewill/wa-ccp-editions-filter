@@ -55,14 +55,23 @@ function wa_ccpef_load_textdomain() {
 // -------------------
 add_action( 'admin_enqueue_scripts', 'wa_ccpef_admin_styles' );
 function wa_ccpef_admin_styles() {
-	wp_enqueue_style( 'wa-ccpef-admin-style', plugins_url( '/css/admin-style.css', __FILE__ ) );
+	wp_enqueue_style( 'wa-ccpef-admin-style', plugins_url( '/css/archives-admin-style.css', __FILE__ ) );
 }
 
+// General front styles
+// -------------------
+add_action( 'wp_enqueue_scripts', 'wa_ccpef_front_styles' );
+function wa_ccpef_front_styles() {
+	wp_enqueue_style( 'wa-ccpef-front-style', plugins_url( '/css/archives-front-style.css', __FILE__ ) );
+}
 
 add_action('plugins_loaded', 'wa_ccpef_load');
 function wa_ccpef_load() {
 	/* Migrate from old versions */
 	require_once(WA_CCPEF_DIR . 'includes/wa-ccp_editions_migrate.inc.php');
+
+	/* Load helpers */
+	require_once(WA_CCPEF_DIR . 'helpers/wa-ccp_editions_templateloader.inc.php');
 
 	/* Load settings page */
 	require_once(WA_CCPEF_DIR . 'includes/wa-ccp_editions_settings.inc.php');
