@@ -4,7 +4,6 @@ Define admin settings
 */
 
 add_filter( 'mb_settings_pages', 'wa_ccpef_settings' );
-
 function wa_ccpef_settings( $settings_pages ) {
 	$settings_pages[] = [
         'menu_title'      => __( 'Archives & edition filter', 'wa_ccpef' ),
@@ -32,8 +31,12 @@ function wa_ccpef_settings( $settings_pages ) {
 	return $settings_pages;
 }
 
-add_filter( 'rwmb_meta_boxes', 'wa_ccpef_settings_fields' );
+// add_filter( 'rwmb_edition-settings_after_save_post', 'wa_ccpef_settings_save' );
+// function wa_ccpef_settings_save( $setting_id ) {
+//     do_action( 'update_option_wa_ccpef_setting_page' );
+// }
 
+add_filter( 'rwmb_meta_boxes', 'wa_ccpef_settings_fields' );
 function wa_ccpef_settings_fields( $meta_boxes ) {
     $prefix = 'wa_ccpef_';
 

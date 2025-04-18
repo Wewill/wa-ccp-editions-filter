@@ -5,7 +5,7 @@ class ccp_editions_filter {
 	private $__term_ids = array();
 	private $__uncategorized_term_ids = array();
 	private $__excluded_term_ids = array();
-	private $filtered_taxonomy = 'section';
+	// private $filtered_taxonomy = 'section';
 	private $current_edition = false;
 	private $current_edition_id = false;
 	private $current_edition_year = false;
@@ -22,27 +22,33 @@ class ccp_editions_filter {
 		
 			// Init
 			$this->init_editions();
-			add_action( 'init', array( $this, 'init_sections') );
-			add_filter( 'get_terms_args', array( $this, 'filter_tags_editions'), 10, 2);
+			add_action( 'init', array( $this, 'init_filtered_taxonomies'), 20);
+			// add_filter( 'get_terms_args', array( $this, 'filter_taxonomies_by_editions'), 10, 2); // No settings
 			add_action( 'wp_before_admin_bar_render', array( $this, 'modify_admin_bar') );
 			global $ccp_editions_filter;
 			$ccp_editions_filter = $this;
 		}
 	}
 	/* Add wil */
-	public function init_sections() {
+	public function init_filtered_taxonomies() {
+
+		// Run filter after init to get settings 
+		add_filter( 'get_terms_args', array( $this, 'filter_taxonomies_by_editions'), 10, 2);
+
 		// Get section terms by meta 
-		// echo "###" . $this->current_edition_id;
+		// wp_die("current_edition_id=" . $this->current_edition_id);
+		// wp_die(print_r(wa_ccpef_get_posts_from_setting_page(), true));
+
 	   	if (empty($this->__term_ids)) {
 			
 			if ( $this->current_edition_id != -1 )
 				$search_args = array(
-					'taxonomy'               => array($this->filtered_taxonomy),
+					'taxonomy'               => wa_ccpef_get_taxonomies_from_setting_page(),
 					'hide_empty'             => false,
 					'number'				 => 0,
 					'meta_query' => array(
 						array(
-						'key'       => 'wpcf-select-edition',
+						'key'       => WA_CCPEF_MIGRATE_TAXONOMY_FIELD ? WA_CCPEF_MIGRATE_TAXONOMY_FIELD : 'wpcf-select-edition',
 						'value'     => $this->current_edition_id,
 						'compare'   => 'LIKE'
 						)
@@ -50,12 +56,12 @@ class ccp_editions_filter {
 				);
 			else 
 				$search_args = array(
-					'taxonomy'               => array($this->filtered_taxonomy),
+					'taxonomy'               => wa_ccpef_get_taxonomies_from_setting_page(),
 					'hide_empty'             => false,
 					'number'				 => 0,
 					// 'meta_query' => array(
 					// 	array(
-					// 	'key'       => 'wpcf-select-edition',
+					// 	'key'       => WA_CCPEF_MIGRATE_TAXONOMY_FIELD ? WA_CCPEF_MIGRATE_TAXONOMY_FIELD : 'wpcf-select-edition',
 					// 	'compare' => 'NOT EXISTS'
 					// 	)
 					// ),
@@ -77,12 +83,12 @@ class ccp_editions_filter {
 		unset($term_query);
 		if (empty($this->__uncategorized_term_ids)) {
 			$search_args = array(
-				'taxonomy'               => array($this->filtered_taxonomy),
+				'taxonomy'               => wa_ccpef_get_taxonomies_from_setting_page(),
 				'hide_empty'             => false,
 				'number'				 => 0,
 				'meta_query' => array(
 				    array(
-				       'key'       => 'wpcf-select-edition',
+				       'key'       => WA_CCPEF_MIGRATE_TAXONOMY_FIELD ? WA_CCPEF_MIGRATE_TAXONOMY_FIELD : 'wpcf-select-edition',
 						'compare' => 'NOT EXISTS'
 				    )
 				),
@@ -105,7 +111,7 @@ class ccp_editions_filter {
 		unset($term_query);
 		if (empty($this->__excluded_term_ids)) {
 			$search_args = array(
-				'taxonomy'               => array($this->filtered_taxonomy),
+				'taxonomy'               => wa_ccpef_get_taxonomies_from_setting_page(),
 				'hide_empty'             => false,
 				'number'				 => 0
 			);
@@ -132,9 +138,9 @@ class ccp_editions_filter {
 	public function init_editions() {
 		// Get terms
 		global $wpdb;
-		$field = 'e-current-edition';
-		$sql="SELECT ".$wpdb->prefix."terms.term_id, name, slug, description, meta_value as current FROM ".$wpdb->prefix."term_taxonomy, ".$wpdb->prefix."terms LEFT JOIN ".$wpdb->prefix."termmeta ON ".$wpdb->prefix."termmeta.term_id = ".$wpdb->prefix."terms.term_id AND meta_key = 'wpcf-e-current-edition' WHERE ".$wpdb->prefix."term_taxonomy.term_id = ".$wpdb->prefix."terms.term_id AND ".$wpdb->prefix."term_taxonomy.taxonomy = 'edition' ORDER BY slug DESC;";
-		$this->__editions = $wpdb->get_results( $sql , ARRAY_A);
+		$field = WA_CCPEF_MIGRATE_FIELD_CURRENT ? WA_CCPEF_MIGRATE_FIELD_CURRENT : 'wpcf-e-current-edition';
+		$sql="SELECT ".$wpdb->prefix."terms.term_id, name, slug, description, meta_value as current FROM ".$wpdb->prefix."term_taxonomy, ".$wpdb->prefix."terms LEFT JOIN ".$wpdb->prefix."termmeta ON ".$wpdb->prefix."termmeta.term_id = ".$wpdb->prefix."terms.term_id AND meta_key = '".$field."' WHERE ".$wpdb->prefix."term_taxonomy.term_id = ".$wpdb->prefix."terms.term_id AND ".$wpdb->prefix."term_taxonomy.taxonomy = 'edition' ORDER BY slug DESC;";
+		$this->__editions = $wpdb->get_results($sql , ARRAY_A);
 		if (array_key_exists('ccp_editions_filter_bar_edition_term_slug', $_POST)) {
 			$term_slug = $_POST['ccp_editions_filter_bar_edition_term_slug'];
 			//echo "term_slug:".$term_slug;
@@ -173,7 +179,7 @@ class ccp_editions_filter {
 		}
 
 		// ADD WIL Get current year over
-		$this->get_current_edition_year = get_term_meta( $this->current_edition_id, 'wpcf-e-year', true );
+		$this->get_current_edition_year = get_term_meta( $this->current_edition_id, WA_CCPEF_MIGRATE_FIELD_YEAR ? WA_CCPEF_MIGRATE_FIELD_YEAR : 'wpcf-e-year', true );
 		//wp_die( $this->get_current_edition_year );
 	
 		// ADD WIL Get current_edition_films_are_online option
@@ -184,20 +190,22 @@ class ccp_editions_filter {
 		
 	}
 	/* Add wil */
-	public function filter_tags_editions($args = array(), $taxonomies = '') {
+	public function filter_taxonomies_by_editions($args = array(), $taxonomies = '') {
 	    global $typenow;
     	global $pagenow;
 
-    	//print_r($args);
-    	//print_r($this->filtered_taxonomy);
-    	//print_r(count($this->__term_ids));
-    	//print_r(count($this->__uncategorized_term_ids));
-    	//print_r($this->__uncategorized_term_ids);
-    	//print_r($this->__excluded_term_ids);
+		// wp_die(print_r(wa_ccpef_get_posts_from_setting_page(), true));
+    	// print_r($taxonomies);
+    	// print_r($args);
+    	// print_r(wa_ccpef_get_taxonomies_from_setting_page());
+    	// print_r(count($this->__term_ids));
+    	// print_r(count($this->__uncategorized_term_ids));
+    	// print_r($this->__uncategorized_term_ids);
+    	// print_r($this->__excluded_term_ids);
     	
-	    if ( $typenow == 'film' && 'edit-tags.php' == $pagenow ) { 
+	    if ( !empty(wa_ccpef_get_posts_from_setting_page()) && in_array($typenow, wa_ccpef_get_posts_from_setting_page()) && 'edit-tags.php' == $pagenow ) { 
 	        // check whether we're currently filtering selected taxonomy
-	        if (implode('', $taxonomies) == $this->filtered_taxonomy ) {
+			if (in_array(implode('', $taxonomies), wa_ccpef_get_taxonomies_from_setting_page())) {
 	        	//$args['hide_empty'] = 0; // Ne change a rien ..
 	        	//$args['page'] = -1; // Ne change a rien.. 
 	        	//$args['hierarchical'] = 0; // Permet d'afficher un term perdu qui ne serait rattaché ni a une edition, ni a une cat >> Ne change rien ;) 
@@ -245,17 +253,9 @@ class ccp_editions_filter {
 	}
 
 	public function display_editions_filter() {
-		$css = "<style type='text/css'> 
-				
-								   
-        </style>";
-
-
-	
-	
 		$html = '<form method="POST" id="ccp_editions_filter_bar_form">';
 		/* Badge */ 
-		$html = '<span class="badge-editions-filter dashicons-before dashicons-image-filter" aria-hidden="true"></span>';
+		$html .= '<span class="badge-editions-filter dashicons-before dashicons-image-filter" aria-hidden="true"></span>';
 		if ( WA_CCPEF_DEBUG === true ) {
 			$html .= "<code class='debug'>c:".$this->current_edition."</code>";
 			$html .= "<code class='debug'>s:".$edition['slug']."</code>";
@@ -271,6 +271,6 @@ class ccp_editions_filter {
 		$html .= '<a class="button button-link button-small button-submit button-online"style="'.(($this->current_edition_films_are_online===true)?'background:#00ba5f;border-color:#00ba5f;':'background:#d84900;border-color:#d84900;').'" href="http://www.fifam.fr/wp-admin/options-general.php#current_edition_films_are_online">'.(($this->current_edition_films_are_online===true)?'ONLINE':'OFFLINE').'</a>';
 		$html .= '</form>';
 		
-		return $css.$html;
+		return $html;
 	}
 }

@@ -5,21 +5,8 @@ Filter
 
 add_action( 'load-edit.php', function() {
     if( is_admin()) {
-		add_filter( 'pre_get_posts', 'filter_film_pages');
-
-		add_filter( 'pre_get_posts', 'filter_ticket_pages');
-
-		add_filter( 'pre_get_posts', 'filter_accreditation_pages');
-
-		add_filter( 'pre_get_posts', 'filter_projection_pages');
-
-		add_filter( 'pre_get_posts', 'filter_clients_pages');
-
-		add_filter( 'pre_get_posts', 'filter_jury_pages');
-
-		add_filter( 'pre_get_posts', 'filter_partenaire_pages');
-
-		add_filter( 'pre_get_posts', 'filter_partner_pages');
+		// Limit posts 
+		add_filter( 'pre_get_posts', 'filter_posts');
 	}
 });
 
@@ -30,165 +17,62 @@ add_action( 'init', function() {
 	add_filter( 'ajax_query_attachments_args', 'ajax_filter_medias', 10, 1 );
 });
 
+function filter_posts($query) {
+    global $ccp_editions_filter;
 
-function filter_film_pages($query) {
-	$q_vars_post_type = get_query_var('post_type');
-	// Do not query if all editions 
-	if ( get_edition()[0] === '-1') return $query;
-	if ( is_admin() && $q_vars_post_type == 'film' && $query->is_main_query() && (!array_key_exists('edition', $_GET) || $_GET['edition'] == '' || $_GET['edition'] == 'current') && (!array_key_exists('board', $_GET) || $_GET['board'] == '' ))
-		$query->set( 'tax_query', 	array(
-				array(
-					'taxonomy' => 'edition',
-					'field'    => 'slug',
-					'terms'    => get_edition()[0],
-				),
-			)
-		);
-	return $query;
-}
+    // Ensure the global instance exists and the method is callable
+    if (!isset($ccp_editions_filter) || !method_exists($ccp_editions_filter, 'get_edition')) return $query;
 
-function filter_ticket_pages($query) {
-	$q_vars_post_type = get_query_var('post_type');
-	// Do not query if all editions 
-	if ( get_edition()[0] === '-1') return $query;
-	if ( $q_vars_post_type == 'ticket' && $query->is_main_query() && (!array_key_exists('edition', $_GET) || $_GET['edition'] == '' || $_GET['edition'] == 'current') && (!array_key_exists('board', $_GET) || $_GET['board'] == '' ))
-		$query->set( 'tax_query', 	array(
-				array(
-					'taxonomy' => 'edition',
-					'field'    => 'slug',
-					'terms'    => get_edition()[0],
-				),
-			)
-		);
-	return $query;
-}
+    // Call the get_edition() method from the class instance
+    $edition = $ccp_editions_filter->get_edition();
 
-function filter_accreditation_pages($query) {
-	$q_vars_post_type = get_query_var('post_type');
-	// error_log("###filter_accreditation_pages query" . print_r($query, true));
-	// error_log("###filter_accreditation_pages" . print_r($q_vars_post_type, true));
-	// Do not query if all editions 
-	if ( get_edition()[0] === '-1') return $query;
-	if ( $q_vars_post_type == 'accreditation' && $query->is_main_query() && (!array_key_exists('edition', $_GET) || $_GET['edition'] == '' || $_GET['edition'] == 'current') && (!array_key_exists('board', $_GET) || $_GET['board'] == '' ))
-		$query->set( 'tax_query', 	array(
-				array(
-					'taxonomy' => 'edition',
-					'field'    => 'slug',
-					'terms'    => get_edition()[0],
-				),
-			)
-		);
-	return $query;
-}
+	// Get posts from settings page	
+	$posts = wa_ccpef_get_posts_from_setting_page();
 
-function filter_projection_pages($query) {
-	$q_vars_post_type = $query->query['post_type'];
-	// Do not query if all editions 
-	if ( get_edition()[0] === '-1') return $query;
-	if ( $q_vars_post_type == 'projection' && $query->is_main_query() && (!array_key_exists('edition', $_GET) || $_GET['edition'] == '' || $_GET['edition'] == 'current') && (!array_key_exists('board', $_GET) || $_GET['board'] == '' )) {
-		$query->set( 'tax_query', 	array(
-				array(
-					'taxonomy' => 'edition',
-					'field'    => 'slug',
-					'terms'    => get_edition()[0],
-				),
-			)
-		);
+	// Do not query if all editions or empty or not array
+	if ( !is_array($edition) || empty($edition) || $edition[0] === '-1' ) return $query;
+
+	// Do not query if no posts settings
+	if ( empty($posts) ) return $query;
+
+	foreach ($posts as $post) {
+		if ( $query->is_main_query() && 
+			 $query->is_post_type_archive($post) && 
+			 (!array_key_exists('edition', $_GET) || $_GET['edition'] == '' || $_GET['edition'] == 'current')) 
+		{
+			$query->set( 'tax_query', 	array(
+					array(
+						'taxonomy' => 'edition',
+						'field'    => 'slug',
+						'terms'    => $edition[0],
+					),
+				)
+			);
+		}
 	}
-	return $query;
-}
 
-function filter_jury_pages($query) {
-	$q_vars_post_type = $_GET['post_type'];
-	// Do not query if all editions 
-	if ( get_edition()[0] === '-1') return $query;
-	if ( $q_vars_post_type == 'jury' && $query->is_main_query() && (!array_key_exists('edition', $_GET) || $_GET['edition'] == '' || $_GET['edition'] == 'current') && (!array_key_exists('board', $_GET) || $_GET['board'] == '' )) {
-		$query->set( 'tax_query', 	array(
-				array(
-					'taxonomy' => 'edition',
-					'field'    => 'slug',
-					'terms'    => get_edition()[0],
-				),
-			)
-		);
-	}
-	return $query;
-}
-
-function filter_partenaire_pages($query) {
-	$q_vars_post_type = $_GET['post_type'];
-	// Do not query if all editions 
-	if ( get_edition()[0] === '-1') return $query;
-	if ( $q_vars_post_type == 'partenaire' && $query->is_main_query() && (!array_key_exists('edition', $_GET) || $_GET['edition'] == '' || $_GET['edition'] == 'current') && (!array_key_exists('board', $_GET) || $_GET['board'] == '' )) {
-		$query->set( 'tax_query', 	array(
-				array(
-					'taxonomy' => 'edition',
-					'field'    => 'slug',
-					'terms'    => get_edition()[0],
-				),
-			)
-		);
-	}
-	return $query;
-}
-
-function filter_partner_pages($query) {
-	$q_vars_post_type = $_GET['post_type'];
-	// Do not query if all editions 
-	if ( get_edition()[0] === '-1') return $query;
-	if ( $q_vars_post_type == 'partner' && $query->is_main_query() && (!array_key_exists('edition', $_GET) || $_GET['edition'] == '' || $_GET['edition'] == 'current') && (!array_key_exists('board', $_GET) || $_GET['board'] == '' )) {
-		$query->set( 'tax_query', 	array(
-				array(
-					'taxonomy' => 'edition',
-					'field'    => 'slug',
-					'terms'    => get_edition()[0],
-				),
-			)
-		);
-	}
-	return $query;
-}
-
-function filter_clients_pages($query) {
-	$q_vars_post_type = get_query_var('post_type');
-	// Do not query if all editions 
-	if ( get_edition()[0] === '-1') return $query;
-	if ( $q_vars_post_type == 'clients' && $query->is_main_query() && (!array_key_exists('edition', $_GET) || $_GET['edition'] == '' || $_GET['edition'] == 'current') && (!array_key_exists('board', $_GET) || $_GET['board'] == '' ))
-	$query->set( 'tax_query', 	array(
-			array(
-				'taxonomy' => 'edition',
-				'field'    => 'slug',
-				'terms'    => get_edition()[0],
-			),
-		)
-	);
-	return $query;
-}
-
-function filter_post($query) {
-	$q_vars_post_type = get_query_var('post_type');
-	// Do not query if all editions 
-	if ( get_edition()[0] === '-1') return $query;
-	if ( $q_vars_post_type == 'post' && $query->is_main_query() && (!array_key_exists('edition', $_GET) || $_GET['edition'] == '' || $_GET['edition'] == 'current') && (!array_key_exists('board', $_GET) || $_GET['board'] == '' ))
-	$query->set( 'tax_query', 	array(
-			array(
-				'taxonomy' => 'edition',
-				'field'    => 'slug',
-				'terms'    => get_edition()[0],
-			),
-		)
-	);
-	return $query;
 }
 
 function filter_medias($query) {
 	global $pagenow;
+    global $ccp_editions_filter;
+
+    // Ensure the global instance exists and the method is callable
+    if (!isset($ccp_editions_filter) || !method_exists($ccp_editions_filter, 'get_edition')) return $query;
+
+    // Call the get_edition() method from the class instance
+    $edition = $ccp_editions_filter->get_edition();
+
+	// Do not query if all editions or empty or not array
+	if ( !is_array($edition) || empty($edition) || $edition[0] === '-1' ) return $query;
+
+	// Get queried post_type 
 	$q_vars_post_type = get_query_var('post_type');
-	// Do not query if all editions 
-	if ( !is_array(get_edition()) || get_edition()[0] === '-1') return $query;
+
 	// Get year from current edition 
-	$term = get_term_by('slug', (string) get_edition()[0], 'edition');
-	$current_edition_year = get_term_meta( $term->term_id, 'wpcf-e-year', true );
+	$term = get_term_by('slug', (string) $edition[0], 'edition');
+	$current_edition_year = get_term_meta( $term->term_id, WA_CCPEF_MIGRATE_FIELD_YEAR ? WA_CCPEF_MIGRATE_FIELD_YEAR : 'wpcf-e-year', true );
+
 	// // From AJAX upload mode grid 
 	// error_log(print_r($_GET,true) . ' / ' . print_r($_SERVER,true) . ' / ' . print_r($query,true));
 	// // [SCRIPT_NAME] => /wp-admin/admin-ajax.php
@@ -202,17 +86,40 @@ function filter_medias($query) {
 	// 	));	
 	// }
 	// >>>> Now done w/ ajax_filter_medias() hook 
+	
 	// From regular pagenow + post_type 
-	if ( is_admin() && $pagenow === 'upload.php' && $q_vars_post_type == 'attachment' && $query->is_main_query() && (!array_key_exists('edition', $_GET) || $_GET['edition'] == '' || $_GET['edition'] == 'current') && (!array_key_exists('board', $_GET) || $_GET['board'] == '' ))
-	$query->set('date_query', array(
-		array(
-			'year' => $current_edition_year,
-		),
-	));	
+	if ( is_admin() && 
+		$pagenow === 'upload.php' && 
+		$q_vars_post_type == 'attachment' && 
+		$query->is_main_query() && 
+		(!array_key_exists('edition', $_GET) || $_GET['edition'] == '' || $_GET['edition'] == 'current') )
+	{
+		$query->set('date_query', array(
+			array(
+				'year' => $current_edition_year,
+			),
+		));
+	}
 	return $query;
 }
 
 function ajax_filter_medias( $query = array() ) {
+	global $ccp_editions_filter;
+
+    // Ensure the global instance exists and the method is callable
+    if (!isset($ccp_editions_filter) || !method_exists($ccp_editions_filter, 'get_edition')) return $query;
+
+    // Call the get_edition() method from the class instance
+    $edition = $ccp_editions_filter->get_edition();
+
+	// Do not query if all editions or empty or not array
+	if ( !is_array($edition) || empty($edition) || $edition[0] === '-1' ) return $query;
+
+	// Get year from current edition 
+	$term = get_term_by('slug', (string) $edition[0], 'edition');
+	$current_edition_year = get_term_meta( $term->term_id, WA_CCPEF_MIGRATE_FIELD_YEAR ? WA_CCPEF_MIGRATE_FIELD_YEAR : 'wpcf-e-year', true );
+
+
 	// error_log('##ajax_filter_medias :: $query'.print_r($query,true));
 	// error_log('##ajax_filter_medias :: $_POST'.print_r($_POST,true));
 	// error_log('##ajax_filter_medias :: $_GET'.print_r($_GET,true));
@@ -252,13 +159,9 @@ function ajax_filter_medias( $query = array() ) {
 
 	)
 	*/
-	// Do not query if all editions 
-	if ( !is_array(get_edition()) || get_edition()[0] === '-1') return $query;
-	// Get year from current edition 
-	$term = get_term_by('slug', (string) get_edition()[0], 'edition');
-	$current_edition_year = get_term_meta( $term->term_id, 'wpcf-e-year', true );
+
 	//From regular pagenow + post_type 
-	if ( is_admin() && ( isset($_POST) && $_POST['action'] === 'query-attachments' ) && $query['post_type'] === 'attachment' && (!array_key_exists('edition', $_GET) || $_GET['edition'] == '' || $_GET['edition'] == 'current') && (!array_key_exists('board', $_GET) || $_GET['board'] == '' ))
+	if ( is_admin() && ( isset($_POST) && $_POST['action'] === 'query-attachments' ) && $query['post_type'] === 'attachment' && (!array_key_exists('edition', $_GET) || $_GET['edition'] == '' || $_GET['edition'] == 'current'))
 	$query['date_query'] = array(
 		array(
 			'year' => $current_edition_year,

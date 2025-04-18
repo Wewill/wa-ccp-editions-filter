@@ -5,7 +5,7 @@ Adds an icon (filter dashicons) before the title of the post types and taxonomie
 
 add_action('admin_head', function () {
 	$screen = get_current_screen();
-	if ($screen && in_array($screen->post_type, ['projets', 'projet']) || $screen && in_array($screen->taxonomy, ['edition'])) {
+	if ($screen && in_array($screen->post_type, wa_ccpef_get_posts_from_setting_page()) || $screen && in_array($screen->taxonomy, wa_ccpef_get_taxonomies_from_setting_page())) {
 		echo '<style>
 			#screen-meta-links::before {
 				content: "\f533";

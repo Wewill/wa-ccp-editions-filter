@@ -64,11 +64,17 @@ function wa_ccpef_load() {
 	/* Migrate from old versions */
 	require_once(WA_CCPEF_DIR . 'includes/wa-ccp_editions_migrate.inc.php');
 
+	/* Load settings page */
+	require_once(WA_CCPEF_DIR . 'includes/wa-ccp_editions_settings.inc.php');
+
 	/* Register Edition taxonomy */
 	require_once(WA_CCPEF_DIR . 'includes/wa-ccp_editions_register.inc.php');
 
-	/* Load settings page */
-	require_once(WA_CCPEF_DIR . 'includes/wa-ccp_editions_settings.inc.php');
+	/* Load getters & shortcodes */
+	require_once(WA_CCPEF_DIR . 'includes/wa-ccp_editions_getters.inc.php');
+
+	/* Load autoadd edition tag */
+	require_once(WA_CCPEF_DIR . 'includes/wa-ccp_editions_autoadd.inc.php');
 
 	/* Load title badge */
 	require_once(WA_CCPEF_DIR . 'includes/wa-ccp_editions_title.inc.php');
@@ -80,11 +86,31 @@ function wa_ccpef_load() {
 
 	/* Admin filter */
 	if ( is_admin() ) {
-		// include(WA_CCPEF_DIR . 'filter/wa-ccp_editions_pre_get_posts.php');
+		include(WA_CCPEF_DIR . 'filter/wa-ccp_editions_pre_get_posts.php');
 	}
 
 	/* Frontend filter */
-	if ( ! is_admin() ) {
+	if ( !is_admin() ) {
 		include(WA_CCPEF_DIR . 'archives/wa-ccp_editions_archives.php');
 	}
+}
+
+/**
+ * Load custom template for 'edition' taxonomy
+ */
+add_filter('template_include', 'wa_ccpef_load_taxonomy_template');
+function wa_ccpef_load_taxonomy_template($template) {
+    // Check if the current query is for the 'edition' taxonomy
+    if (is_tax('edition')) {
+        // Path to your custom template file
+        $custom_template = plugin_dir_path(__FILE__) . 'templates/taxonomy-edition.php';
+
+        // Check if the custom template exists
+        if (file_exists($custom_template)) {
+            return $custom_template;
+        }
+    }
+
+    // Return the default template if no custom template is found
+    return $template;
 }

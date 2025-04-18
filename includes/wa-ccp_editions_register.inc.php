@@ -9,7 +9,7 @@ if ( WA_CCPEF_MIGRATE === true ) {
     return;
 }
 
-add_action( 'init', 'wa_ccpef_register_taxonomy' );
+add_action( 'init', 'wa_ccpef_register_taxonomy', 20);
 function wa_ccpef_register_taxonomy() {
 	$labels = [
 		'name'                       => esc_html__( 'Editions', 'wa_ccpef' ),
@@ -62,11 +62,18 @@ function wa_ccpef_register_taxonomy() {
 			'hierarchical' => false,
 		],
 	];
-	register_taxonomy( 'edition', ['post'], $args );
+    // Register the taxonomy initially
+    register_taxonomy( 'edition', wa_ccpef_get_posts_from_setting_page(), $args );
+
+    // Hook to re-register the taxonomy when the setting changes
+    // add_action( 'update_option_wa_ccpef_setting_page', function() use ( $args ) {
+    //     // wp_die(print_r(wa_ccpef_get_posts_from_setting_page(), true));
+    //     unregister_taxonomy( 'edition' );
+    //     register_taxonomy( 'edition', wa_ccpef_get_posts_from_setting_page(), $args );
+    // } );
 }
 
-
-add_filter( 'rwmb_meta_boxes', 'wa_ccpef_register_taxonomy_fields', 10);
+add_filter( 'rwmb_meta_boxes', 'wa_ccpef_register_taxonomy_fields');
 function wa_ccpef_register_taxonomy_fields( $meta_boxes ) {
     $prefix = 'waccpef-';
 
@@ -127,4 +134,81 @@ function wa_ccpef_register_taxonomy_fields( $meta_boxes ) {
     ];
 
     return $meta_boxes;
+}
+
+
+add_action( 'init', 'wa_ccpef_taxonomies_field', 20 );
+function wa_ccpef_taxonomies_field() {
+    // Add a custom field to the term edit form
+    if ( function_exists( 'wa_ccpef_get_taxonomies_from_setting_page' ) && !empty(wa_ccpef_get_taxonomies_from_setting_page()) )
+    {
+        foreach (wa_ccpef_get_taxonomies_from_setting_page() as $taxonomy) {
+            add_action( $taxonomy . '_add_form_fields', 'wa_ccpef_add_term_fields' );
+            add_action( $taxonomy . '_edit_form_fields', 'wa_ccpef_edit_term_fields', 10, 2 );
+            add_action( 'created_' . $taxonomy, 'wa_ccpef_save_term_fields' );
+            add_action( 'edited_' . $taxonomy, 'wa_ccpef_save_term_fields' );
+        }
+    }
+}
+
+function wa_ccpef_add_term_fields( $taxonomy ) {
+	?>
+        <div class="form-field">
+            <label for="<?= WA_CCPEF_MIGRATE_TAXONOMY_FIELD?>"><?php esc_html_e( 'Select edition', 'wa_ccpef' ); ?></label>
+            <select name="<?= WA_CCPEF_MIGRATE_TAXONOMY_FIELD?>" id="<?= WA_CCPEF_MIGRATE_TAXONOMY_FIELD?>">
+                <?php
+                $terms = get_terms( [
+                    'taxonomy'   => 'edition',
+                    'hide_empty' => false,
+                ] );
+
+                if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+                    echo '<option value="">' . esc_html__( 'None', 'wa_ccpef' ) . '</option>';
+                    foreach ( $terms as $term ) {
+                        $selected = get_term_meta( $term->term_id, WA_CCPEF_MIGRATE_FIELD_CURRENT ? WA_CCPEF_MIGRATE_FIELD_CURRENT : 'wpcf-e-current-edition', true ) ? 'selected' : '';
+                        echo '<option '.$selected.' value="' . esc_attr( $term->term_id ) . '">' . esc_html( $term->name ) . ' ( '.esc_html( $term->description ).' )</option>';
+                    }
+                }
+                ?>
+            </select>
+            <p><?php esc_html_e( 'Select an edition from the list.', 'wa_ccpef' ); ?></p>
+        </div>
+	<?php
+}
+
+function wa_ccpef_edit_term_fields( $term, $taxonomy ) {
+    // Get meta data value
+    $selected_edition = get_term_meta( $term->term_id, WA_CCPEF_MIGRATE_TAXONOMY_FIELD, true );
+    ?>
+    <tr class="form-field">
+        <th><label for="<?= WA_CCPEF_MIGRATE_TAXONOMY_FIELD?>"><?php esc_html_e( 'Select edition', 'wa_ccpef' ); ?></label></th>
+        <td>
+            <select name="<?= WA_CCPEF_MIGRATE_TAXONOMY_FIELD?>" id="<?= WA_CCPEF_MIGRATE_TAXONOMY_FIELD?>">
+                <?php
+                $terms = get_terms( [
+                    'taxonomy'   => 'edition',
+                    'hide_empty' => false,
+                ] );
+
+                if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+                    echo '<option value="">' . esc_html__( 'None', 'wa_ccpef' ) . '</option>';
+                    foreach ( $terms as $term_option ) {
+                        $selected = ( $selected_edition == $term_option->term_id ) ? 'selected' : '';
+                        echo '<option ' . $selected . ' value="' . esc_attr( $term_option->term_id ) . '">' . esc_html( $term_option->name ) . ' ( ' . esc_html( $term_option->description ) . ' )</option>';
+                    }
+                }
+                ?>
+            </select>
+            <p class="description"><?php esc_html_e( 'Select an edition from the list.', 'wa_ccpef' ); ?></p>
+        </td>
+    </tr>
+    <?php
+}
+
+function wa_ccpef_save_term_fields( $term_id ) {
+	update_term_meta(
+		$term_id,
+		WA_CCPEF_MIGRATE_TAXONOMY_FIELD,
+		sanitize_text_field( $_POST[ WA_CCPEF_MIGRATE_TAXONOMY_FIELD ] )
+	);
 }
