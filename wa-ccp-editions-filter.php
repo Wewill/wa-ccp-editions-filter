@@ -91,6 +91,9 @@ function wa_ccpef_load() {
 	/* Load title badge */
 	require_once(WA_CCPEF_DIR . 'includes/wa-ccp_editions_title.inc.php');
 
+	/* Load editions blocks */
+	require_once(WA_CCPEF_DIR . 'archives/wa-ccp_editions_block.inc.php');
+
 	/* Load editions filter class */
 	require_once(WA_CCPEF_DIR . 'filter/wa-ccp_editions_filter.inc.php');
 	$ccpef = new ccp_editions_filter();
