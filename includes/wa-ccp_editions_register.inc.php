@@ -9,7 +9,7 @@ if ( WA_CCPEF_MIGRATE === true ) {
     return;
 }
 
-add_action( 'init', 'wa_ccpef_register_taxonomy', 20);
+add_action( 'init', 'wa_ccpef_register_taxonomy', 19);
 function wa_ccpef_register_taxonomy() {
 	$labels = [
 		'name'                       => esc_html__( 'Editions', 'wa_ccpef' ),

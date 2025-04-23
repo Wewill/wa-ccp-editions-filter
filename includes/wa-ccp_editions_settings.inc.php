@@ -108,6 +108,18 @@ function wa_ccpef_settings_fields( $meta_boxes ) {
                 'hide_from_rest'    => false,
                 'limit_type'        => 'character',
             ],
+            [
+                'name'              => __( 'Display posts ordered by post types ?', 'wa_ccpef' ),
+                'id'                => $prefix . 'order_by_posttype',
+                'type'              => 'switch',
+                'label_description' => __( 'Check if you want to display post types hierachy or a sinple list', 'wa_ccpef' ),
+                'std'               => true,
+                'required'          => false,
+                'clone'             => false,
+                'clone_empty_start' => false,
+                'hide_from_rest'    => false,
+            ],
+
         ],
     ];
 
@@ -126,7 +138,8 @@ function wa_ccpef_posts_options_callback() {
         if ( in_array( $post_type, [ '' ] ) ) {
             continue;
         }
-        $options[ $post_type ] = __( $post_type, 'wa_ccpef' );
+        $post_type_object = get_post_type_object( $post_type );
+        $options[ $post_type ] = $post_type_object ? $post_type_object->labels->singular_name : __( $post_type, 'wa_ccpef' );
     }
     return $options;
 }
@@ -143,14 +156,28 @@ function wa_ccpef_taxonomies_options_callback() {
         if ( in_array( $taxonomy, [ 'edition' ] ) ) {
             continue;
         }
-        $options[ $taxonomy ] = __( $taxonomy, 'wa_ccpef' );
+        $taxonomy_object = get_taxonomy( $taxonomy );
+        $options[ $taxonomy ] = $taxonomy_object ? $taxonomy_object->labels->singular_name : __( $taxonomy, 'wa_ccpef' );
     }
     return $options;
 }
 
+
 function wa_ccpef_get_posts_from_setting_page() {
     $prefix = 'wa_ccpef_';
     return rwmb_meta( $prefix . 'allowed_post', [ 'object_type' => 'setting' ], 'archives-edition-filter' );
+}
+
+function wa_ccpef_get_posts_from_setting_page_as_options() {
+    $prefix = 'wa_ccpef_';
+    $settings = get_option('archives-edition-filter');
+    $post_types = isset($settings[ $prefix . 'allowed_post']) ? $settings[ $prefix . 'allowed_post'] : [];
+    $options = [];
+    foreach ( $post_types as $post_type ) {
+        $post_type_object = get_post_type_object( $post_type );
+        $options[ $post_type ] = $post_type_object ? $post_type_object->labels->singular_name : __( $post_type, 'wa_ccpef' );
+    }
+    return $options;
 }
 
 function wa_ccpef_get_taxonomies_from_setting_page() {
@@ -161,4 +188,12 @@ function wa_ccpef_get_taxonomies_from_setting_page() {
 function wa_ccpef_get_filtermedias_from_setting_page() {
     $prefix = 'wa_ccpef_';
     return rwmb_meta( $prefix . 'filter_medias_by_edition_year', [ 'object_type' => 'setting' ], 'archives-edition-filter' );
+}
+
+function wa_ccpef_get_orderbyposttypes_from_setting_page() {
+    $prefix = 'wa_ccpef_';
+    // return rwmb_meta( $prefix . 'order_by_posttype', [ 'object_type' => 'setting' ], 'archives-edition-filter' );
+    $settings = get_option('archives-edition-filter');
+    // wp_die(print_r($settings, true));
+    return isset($settings[ $prefix . 'order_by_posttype']) ? $settings[ $prefix . 'order_by_posttype'] : null;
 }
