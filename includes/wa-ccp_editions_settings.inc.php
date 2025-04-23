@@ -165,7 +165,9 @@ function wa_ccpef_taxonomies_options_callback() {
 
 function wa_ccpef_get_posts_from_setting_page() {
     $prefix = 'wa_ccpef_';
-    return rwmb_meta( $prefix . 'allowed_post', [ 'object_type' => 'setting' ], 'archives-edition-filter' );
+    // return rwmb_meta( $prefix . 'allowed_post', [ 'object_type' => 'setting' ], 'archives-edition-filter' );
+    $settings = get_option('archives-edition-filter');
+    return isset($settings[ $prefix . 'allowed_post']) ? $settings[ $prefix . 'allowed_post'] : null;
 }
 
 function wa_ccpef_get_posts_from_setting_page_as_options() {
@@ -194,6 +196,5 @@ function wa_ccpef_get_orderbyposttypes_from_setting_page() {
     $prefix = 'wa_ccpef_';
     // return rwmb_meta( $prefix . 'order_by_posttype', [ 'object_type' => 'setting' ], 'archives-edition-filter' );
     $settings = get_option('archives-edition-filter');
-    // wp_die(print_r($settings, true));
     return isset($settings[ $prefix . 'order_by_posttype']) ? $settings[ $prefix . 'order_by_posttype'] : null;
 }

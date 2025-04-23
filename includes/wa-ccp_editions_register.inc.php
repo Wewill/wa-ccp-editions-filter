@@ -3,13 +3,12 @@
 Register Edition taxonomy
 */
 
-// echo WA_CCPEF_MIGRATE ? '>>>>>>>>>>>>>>>>>>> Migrate : from ccp-editions-filter to wa-ccp-editions-filter' : '>>>>>>>>>>>>>>>>>>> New : Register edition taxonomy';
 if ( WA_CCPEF_MIGRATE === true ) {
-    // If the taxonomy is already registered, we don't need to register it again.
+    // If the taxonomy edition is already registered, we don't need to register it again.
     return;
 }
 
-add_action( 'init', 'wa_ccpef_register_taxonomy', 19);
+add_action( 'init', 'wa_ccpef_register_taxonomy', 10);
 function wa_ccpef_register_taxonomy() {
 	$labels = [
 		'name'                       => esc_html__( 'Editions', 'wa_ccpef' ),
@@ -65,9 +64,8 @@ function wa_ccpef_register_taxonomy() {
     // Register the taxonomy initially
     register_taxonomy( 'edition', wa_ccpef_get_posts_from_setting_page(), $args );
 
-    // Hook to re-register the taxonomy when the setting changes
+    // // Hook to re-register the taxonomy when the setting changes
     // add_action( 'update_option_wa_ccpef_setting_page', function() use ( $args ) {
-    //     // wp_die(print_r(wa_ccpef_get_posts_from_setting_page(), true));
     //     unregister_taxonomy( 'edition' );
     //     register_taxonomy( 'edition', wa_ccpef_get_posts_from_setting_page(), $args );
     // } );
