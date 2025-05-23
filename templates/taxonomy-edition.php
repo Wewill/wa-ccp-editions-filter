@@ -5,41 +5,34 @@ if (!defined('ABSPATH')) {
 }
 
 $prefix = 'waccpef-';
-
 $term_id = get_queried_object_id();
+
+// Get template name 
+$template_name = '';
+if (!empty(wa_ccpef_get_template_name_from_setting_page())) {
+    $template_name = wa_ccpef_get_template_name_from_setting_page();
+}
+
+// wp_die($template_name);
 
 // Get settings
 $order_by_post_types = wa_ccpef_get_orderbyposttypes_from_setting_page(); 
 
 // Get metas
-$edition_color = get_term_meta($term_id, $prefix . 'e-color', true);
-$edition_color_style = $edition_color ? 'style="background-color:'.$edition_color.'!important;"' : '';
-$edition_image = get_term_meta($term_id, $prefix . 'e-image', true);
-if (!empty($edition_image)) {
-    $edition_image_url = wp_get_attachment_url($edition_image);
-}
+$edition_content_before = get_term_meta($term_id, $prefix . 'e-content-before', true);
+$edition_content_after = get_term_meta($term_id, $prefix . 'e-content-after', true);
+
 
 get_header(); ?>
 
-<section id="pagetitle" class="mt-10 pt-5 pt-md-9 pb-5 pb-md-9 contrast--light --f-w shadow-md rounded-top-4 " <?= $edition_color_style ?>>
-    <div class="jumbotron">
-        <div class="container-fluid">
-            <hgroup data-aos="fade-down">
-                <h1 class="title mb-0 fw-bold"><?php single_term_title(); ?></h1>
-                <small><?= term_description(); ?></small>
-            </hgroup>
-        </div>
-    </div>
-</section>
+<div class="taxonomy-edition-header">
+    <?php plugin_get_template_part('templates/partials/header', $template_name); ?>
+</div>
 
-<?php if (!empty($edition_image)) : ?>
-<section id="pageheader" class="mt-0 mb-0 contrast--light --f-w rounded-bottom-4" data-aos="slide-down" data-aos-id="pageheader">
-    <figure title="">
-        <picture class="lazy">
-        <img src="<?= esc_url($edition_image_url); ?>" alt="<?php esc_attr_e('Edition Image', 'wa-ccpef'); ?>" style="object-fit: cover; max-height: 25vh; width: 100%; height: auto;">
-        </picture>
-    </figure>
-</section>
+<?php if (!empty($edition_content_before)) : ?>
+    <div class="taxonomy-edition-content mt-8">
+        <?= $edition_content_before; ?>
+    </div>
 <?php endif; ?>
 
 <div class="taxonomy-edition-archive mt-8">
@@ -79,7 +72,7 @@ get_header(); ?>
                         echo '<h3>' . esc_html($pt_obj->labels->name) . '</h3>';
                         echo '<ul class="edition-posts">';
                         while ($query->have_posts()) : $query->the_post();
-                            plugin_get_template_part('templates/partials/cards');
+                            plugin_get_template_part('templates/partials/cards', $template_name);
                         endwhile;
                         echo '</ul>';
                         wp_reset_postdata();
@@ -92,7 +85,7 @@ get_header(); ?>
             ?>
                 <ul class="edition-posts">
                     <?php while (have_posts()) : the_post(); ?>
-                        <?php plugin_get_template_part('templates/partials/cards'); ?>
+                        <?php plugin_get_template_part('templates/partials/cards', $template_name); ?>
                     <?php endwhile; ?>
                 </ul>
             <?php endif; ?>
@@ -101,5 +94,11 @@ get_header(); ?>
     <?php endif; ?>
 
 </div>
+
+<?php if (!empty($edition_content_after)) : ?>
+    <div class="taxonomy-edition-content mt-8">
+        <?= $edition_content_after; ?>
+    </div>
+<?php endif; ?>
 
 <?php get_footer(); ?>
