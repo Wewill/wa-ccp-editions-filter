@@ -3,7 +3,7 @@
 Define admin settings
 */
 
-add_filter( 'mb_settings_pages', 'wa_ccpef_settings' );
+add_filter( 'mb_settings_pages', 'wa_ccpef_settings', 50);
 function wa_ccpef_settings( $settings_pages ) {
 	$settings_pages[] = [
         'menu_title'      => __( 'Archives & edition filter', 'wa_ccpef' ),
@@ -37,7 +37,7 @@ function wa_ccpef_settings( $settings_pages ) {
 //     do_action( 'update_option_wa_ccpef_setting_page' );
 // }
 
-add_filter( 'rwmb_meta_boxes', 'wa_ccpef_settings_fields' );
+add_filter( 'rwmb_meta_boxes', 'wa_ccpef_settings_fields', 50);
 function wa_ccpef_settings_fields( $meta_boxes ) {
     $prefix = 'wa_ccpef_';
 
