@@ -71,7 +71,7 @@ function wa_ccpef_register_taxonomy() {
     // } );
 }
 
-add_filter( 'rwmb_meta_boxes', 'wa_ccpef_register_taxonomy_fields');
+add_filter( 'rwmb_meta_boxes', 'wa_ccpef_register_taxonomy_fields', 20);
 function wa_ccpef_register_taxonomy_fields( $meta_boxes ) {
     $prefix = 'waccpef-';
 
@@ -200,7 +200,7 @@ function wa_ccpef_register_taxonomy_fields( $meta_boxes ) {
     return $meta_boxes;
 }
 
-
+// Add edition to selected taxonomies
 add_action( 'init', 'wa_ccpef_taxonomies_field', 20 );
 function wa_ccpef_taxonomies_field() {
     // Add a custom field to the term edit form
