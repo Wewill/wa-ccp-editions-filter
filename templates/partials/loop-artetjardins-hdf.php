@@ -1,14 +1,15 @@
 <?php
     global $query;
-    // print_r( $args['pt_obj']->slug);
-    if ( $args['pt_obj']->slug === 'jardin') {
+    //print_r($args['pt_obj']);
+
+    if ( $args['pt_obj']->name === 'directory') {
         if ($query->have_posts()) {
             $post_ids = [];
             while ($query->have_posts()) : $query->the_post();
                 $post_ids[] = get_the_ID();
             endwhile;
             wp_reset_postdata();
-            echo '<pre>' . esc_html(print_r($post_ids, true)) . '</pre>';
+            // echo '<pre>' . esc_html(print_r($post_ids, true)) . '</pre>';
 
             // Display Directory AVP 
             $ids_string = implode(',', $post_ids);
@@ -17,7 +18,7 @@
 
     } else {
         if ($query->have_posts()) {
-            echo '<h3>' . esc_html($args['pt_obj']->labels->name) . '</h3>';
+            echo '<h3>' . esc_html($args['pt_obj']->label) . '</h3>';
             echo '<ul class="edition-posts">';
             while ($query->have_posts()) : $query->the_post();
                 plugin_get_template_part('templates/partials/cards', $template_name);
