@@ -13,7 +13,15 @@
 
             // Display Directory AVP 
             $ids_string = implode(',', $post_ids);
-            print(do_shortcode('[spb_directory_no_reload el_project="ALL" el_course="" el_ids="' . $ids_string . '" width="1/1" el_position="first last"]'));
+            print(do_shortcode('[spb_directory_no_reload 
+                el_project="ALL" 
+                el_category="" 
+                el_location="" 
+                el_artist="" 
+                el_course="" 
+                el_ids="' . $ids_string . '" 
+                width="1/1" el_position="first last"]'
+            ));
         }
 
     } else {
