@@ -1,7 +1,7 @@
 <?php
     global $query;
     // print_r( $args['pt_obj']->slug);
-    if ( $args['pt_obj']->slug === 'directory') {
+    if ( $args['pt_obj']->slug === 'jardin') {
         if ($query->have_posts()) {
             $post_ids = [];
             while ($query->have_posts()) : $query->the_post();
