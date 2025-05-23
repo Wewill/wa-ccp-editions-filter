@@ -76,7 +76,7 @@ function wa_ccpef_register_taxonomy_fields( $meta_boxes ) {
     $prefix = 'waccpef-';
 
     $meta_boxes[] = [
-        'title'      => __( 'Edition › General', 'wa-rsfp' ),
+        'title'      => __( 'Edition › General', 'wa_ccpef' ),
         'id'         => 'edition-general',
         'taxonomies' => ['edition'],
         'class'      => 'wa_ccpef',
@@ -153,6 +153,46 @@ function wa_ccpef_register_taxonomy_fields( $meta_boxes ) {
                 'clone'             => false,
                 'clone_empty_start' => false,
                 'hide_from_rest'    => false,
+            ],
+            [
+                'name'              => __( 'Images', 'wa_ccpef' ),
+                'id'                => $prefix . 'e-images',
+                'type'              => 'image_advanced',
+                'label_description' => __( 'Choose an edition slideshow images', 'wa_ccpef' ),
+                'max_file_uploads'  => 3,
+                'force_delete'      => false,
+                'required'          => false,
+                'clone'             => false,
+                'clone_empty_start' => false,
+                'hide_from_rest'    => false,
+            ],
+            [
+                'name'              => __( 'Content ( before )', 'wa_ccpef' ),
+                'id'                => $prefix . 'e-content-before',
+                'type'              => 'wysiwyg',
+                'options'           => [
+                    'media_buttons'  => true,
+                    'drag_drop_upload' => true,
+                    // 'default_editor' => true,
+                    'teeny' => true,
+                    'textarea_rows'  => 4,
+                ],
+				'label_description' => __( '<span class="label">INFO</span> Fill with formatted text', 'wa_ccpef' ),
+				'desc' => __( '<span class="label">TIPS</span> This content will be showed after title', 'wa_ccpef' ),
+            ],
+            [
+                'name'              => __( 'Content ( after )', 'wa_ccpef' ),
+                'id'                => $prefix . 'e-content-after',
+                'type'              => 'wysiwyg',
+                'options'           => [
+                    'media_buttons'  => true,
+                    'drag_drop_upload' => true,
+                    // 'default_editor' => true,
+                    'teeny' => true,
+                    'textarea_rows'  => 4,
+                ],
+				'label_description' => __( '<span class="label">INFO</span> Fill with formatted text', 'wa_ccpef' ),
+				'desc' => __( '<span class="label">TIPS</span> This content will be showed after edition posts', 'wa_ccpef' ),
             ],
         ],
     ];
