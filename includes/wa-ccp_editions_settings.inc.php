@@ -14,6 +14,7 @@ function wa_ccpef_settings( $settings_pages ) {
         'tabs'            => [
             'edition'  => 'Edition',
             'archives' => 'Archives',
+            'template' => 'Template',
         ],
         'tab_style'       => 'left',
         // 'help_tabs'       => [
@@ -123,6 +124,27 @@ function wa_ccpef_settings_fields( $meta_boxes ) {
         ],
     ];
 
+    $meta_boxes[] = [
+        'title'          => __( 'Template settings', 'wa_ccpef' ),
+        'id'             => 'template-settings',
+        'settings_pages' => ['archives-edition-filter'],
+        'tab'            => 'template',
+        'fields'         => [
+            [
+                'name'              => __( 'Override default with template name', 'wa_ccpef' ),
+                'id'                => $prefix . 'template_name',
+                'type'              => 'text',
+                'required'          => false,
+                'disabled'          => false,
+                'readonly'          => false,
+                'clone'             => false,
+                'clone_empty_start' => false,
+                'hide_from_rest'    => false,
+                'limit_type'        => 'character',
+            ],
+        ],
+    ];
+
     return $meta_boxes;
 }
 
@@ -197,4 +219,9 @@ function wa_ccpef_get_orderbyposttypes_from_setting_page() {
     // return rwmb_meta( $prefix . 'order_by_posttype', [ 'object_type' => 'setting' ], 'archives-edition-filter' );
     $settings = get_option('archives-edition-filter');
     return isset($settings[ $prefix . 'order_by_posttype']) ? $settings[ $prefix . 'order_by_posttype'] : null;
+}
+
+function wa_ccpef_get_template_name_from_setting_page() {
+    $prefix = 'wa_ccpef_';
+    return rwmb_meta( $prefix . 'template_name', [ 'object_type' => 'setting' ], 'archives-edition-filter' );
 }
