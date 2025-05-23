@@ -13,8 +13,6 @@ if (!empty(wa_ccpef_get_template_name_from_setting_page())) {
     $template_name = wa_ccpef_get_template_name_from_setting_page();
 }
 
-// wp_die($template_name);
-
 // Get settings
 $order_by_post_types = wa_ccpef_get_orderbyposttypes_from_setting_page(); 
 
@@ -52,6 +50,7 @@ get_header(); ?>
                     }
                 }
 
+                // Loop posttypes with posts 
                 foreach ($used_post_types as $post_type => $pt_obj) {
                     $query = new WP_Query([
                         'post_type'      => $post_type,
@@ -68,15 +67,8 @@ get_header(); ?>
                         'post_status'    => 'publish',
                     ]);
 
-                    if ($query->have_posts()) {
-                        echo '<h3>' . esc_html($pt_obj->labels->name) . '</h3>';
-                        echo '<ul class="edition-posts">';
-                        while ($query->have_posts()) : $query->the_post();
-                            plugin_get_template_part('templates/partials/cards', $template_name);
-                        endwhile;
-                        echo '</ul>';
-                        wp_reset_postdata();
-                    }
+                    // Post template is calling cards template
+                    plugin_get_template_part('templates/partials/loop', $template_name, array('pt_obj' => $pt_obj));
                 }
                 
 
