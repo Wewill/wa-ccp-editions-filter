@@ -202,9 +202,61 @@ if (isset($show_page_title) && !$show_page_title) {
         .slider-social, .edition-color{
             display: none !important;
         }
-        .edition-image img {
-            max-height: calc( 150px - 90px );
+        .edition-title {
+            left: 20px;
+            width: 60%;
         }
+        .edition-image {
+            right: 20px;
+            height: calc(250px - 90px);
+        }
+        .edition-image img {
+            max-height: 100px;
+        }
+    }
+    .edition-image {
+        position: absolute;
+        top: 0;
+        right: calc(90px + 20px);
+        width: auto;
+        height: calc(500px - 90px);
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+    }
+    .edition-image img {
+        object-fit: cover;
+        max-height: calc(500px - 130px);
+        width: auto;
+        height: 100%;
+        position: relative;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    .edition-color {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 90px;
+        height: calc(500px - 90px);
+        z-index: 100;
+        /* background-color set inline for dynamic color */
+    }
+    .edition-title {
+        position: absolute;
+        top: 0;
+        left: calc(90px + 20px);
+        width: 40%;
+        height: calc(500px - 90px);
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+    }
+    .slider-social {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 </style>
 
@@ -215,18 +267,17 @@ if (isset($show_page_title) && !$show_page_title) {
     <!-- END .wa-slider -->
 
     <?php if (!empty($edition_image)) : ?>
-    <div class="edition-image" style="position: absolute; top: 0; right: calc(90px + 20px); width: auto; height: calc(500px - 90px); z-index: 100; display: flex; align-items: center; justify-content: end;">
-        <img src="<?= esc_url($edition_image_url); ?>" alt="<?php esc_attr_e('Edition Image', 'wa-ccpef'); ?>" style="object-fit: cover; max-height: calc( 500px - 130px ); width: auto; height: 100%; position:relative; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);">
+    <div class="edition-image">
+        <img src="<?= esc_url($edition_image_url); ?>" alt="<?php esc_attr_e('Edition Image', 'wa-ccpef'); ?>">
     </div>
     <?php endif; ?>
 
     <?php if (!empty($edition_color)) : ?>
-        <div class="edition-color" style="position: absolute; top: 0; left: 0; width: 90px; height: calc(500px - 90px); background-color: <?= esc_attr($edition_color); ?>; z-index:100;"></div>
+        <div class="edition-color" style="background-color: <?= esc_attr($edition_color); ?>;"></div>
     <?php endif; ?>
 
-    <div style="position: absolute; top: 0; left: calc(90px + 20px); width: 40%; height: calc(500px - 90px); z-index: 100; display: flex; align-items: center; justify-content: start;">
-
-            <hgroup class="heading-text" style="">
+    <div class="edition-title">
+            <hgroup class="heading-text">
                 <h1 class="over"><?php single_term_title(); ?></h1>
                 <?php
                 $desc = term_description();
@@ -238,9 +289,7 @@ if (isset($show_page_title) && !$show_page_title) {
                 ?>
                 <h3 class="dates"><?= esc_html($edition_date_string); ?></h3>
             </hgroup>
-
     </div>
-
 
     <!-- <div class="slider-page-title">
         <a href="#main-container">Festival international de jardins | Hortillonnages Amiens <i class="icon-right"></i></a>
@@ -264,7 +313,7 @@ if (isset($show_page_title) && !$show_page_title) {
             <p></p>
         </div>
     </div>
-    <div class="slider-social" style="display:flex; justify-content: center; align-items: center;">
+    <div class="slider-social">
         <ul class="social-icons standard ">
             <li class="twitter">
                 <a href="http://www.twitter.com/art_jardins" target="_blank"><i class="fa-twitter"></i><i class="fa-twitter"></i></a>
