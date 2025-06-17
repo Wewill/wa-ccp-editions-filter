@@ -198,6 +198,14 @@ if (isset($show_page_title) && !$show_page_title) {
         letter-spacing: 0;
         color: #fff; text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     }
+    @media (max-width: 767px) {
+        .slider-social, .edition-color{
+            display: none !important;
+        }
+        .edition-image img {
+            max-height: calc( 150px - 90px );
+        }
+    }
 </style>
 
 <div class="wa-slider-outer">
@@ -207,13 +215,13 @@ if (isset($show_page_title) && !$show_page_title) {
     <!-- END .wa-slider -->
 
     <?php if (!empty($edition_image)) : ?>
-    <div style="position: absolute; top: 0; right: calc(90px + 20px); width: auto; height: calc(500px - 90px); z-index: 100; display: flex; align-items: center; justify-content: end;">
+    <div class="edition-image" style="position: absolute; top: 0; right: calc(90px + 20px); width: auto; height: calc(500px - 90px); z-index: 100; display: flex; align-items: center; justify-content: end;">
         <img src="<?= esc_url($edition_image_url); ?>" alt="<?php esc_attr_e('Edition Image', 'wa-ccpef'); ?>" style="object-fit: cover; max-height: calc( 500px - 130px ); width: auto; height: 100%; position:relative; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);">
     </div>
     <?php endif; ?>
 
     <?php if (!empty($edition_color)) : ?>
-        <div style="position: absolute; top: 0; left: 0; width: 90px; height: calc(500px - 90px); background-color: <?= esc_attr($edition_color); ?>; z-index:100;"></div>
+        <div class="edition-color" style="position: absolute; top: 0; left: 0; width: 90px; height: calc(500px - 90px); background-color: <?= esc_attr($edition_color); ?>; z-index:100;"></div>
     <?php endif; ?>
 
     <div style="position: absolute; top: 0; left: calc(90px + 20px); width: 40%; height: calc(500px - 90px); z-index: 100; display: flex; align-items: center; justify-content: start;">
