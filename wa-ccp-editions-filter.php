@@ -111,7 +111,6 @@ function wa_ccpef_load() {
 	if ( !is_admin() ) {
 		include(WA_CCPEF_DIR . 'archives/wa-ccp_editions_archives.php');
 	}
-			include(WA_CCPEF_DIR . 'archives/wa-ccp_editions_archives.php');
 
 }
 
@@ -121,8 +120,8 @@ function wa_ccpef_load() {
 add_filter('template_include', 'wa_ccpef_load_taxonomy_template');
 function wa_ccpef_load_taxonomy_template($template) {
 
-	print_r(get_query_var('edition_archive')); // Devrait être 1
-	print_r($_SERVER['REQUEST_URI']); // Pour vérifier l'URL
+	// print_r(get_query_var('edition_archive')); // Devrait être 1
+	// print_r($_SERVER['REQUEST_URI']); // Pour vérifier l'URL
 
 	if (get_query_var('edition_archive')) {
 		// Path to your custom template file
