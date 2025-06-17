@@ -198,22 +198,6 @@ if (isset($show_page_title) && !$show_page_title) {
         letter-spacing: 0;
         color: #fff; text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     }
-    @media (max-width: 767px) {
-        .slider-social, .edition-color{
-            display: none !important;
-        }
-        .edition-title {
-            left: 20px;
-            width: 60%;
-        }
-        .edition-image {
-            right: 20px;
-            height: calc(250px - 90px);
-        }
-        .edition-image img {
-            max-height: 100px;
-        }
-    }
     .edition-image {
         position: absolute;
         top: 0;
@@ -257,6 +241,22 @@ if (isset($show_page_title) && !$show_page_title) {
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+    @media (max-width: 767px) {
+        .slider-social, .edition-color{
+            display: none !important;
+        }
+        .edition-title {
+            left: 20px;
+            width: 60%;
+        }
+        .edition-image {
+            right: 20px;
+            height: calc(250px - 90px);
+        }
+        .edition-image img {
+            max-height: 100px;
+        }
     }
 </style>
 
