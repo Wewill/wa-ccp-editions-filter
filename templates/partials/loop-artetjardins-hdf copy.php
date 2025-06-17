@@ -1,6 +1,6 @@
 <?php
     global $query;
-    // print_r($args['pt_obj']);
+    //print_r($args['pt_obj']);
 
     if ( $args['pt_obj']->name === 'directory') {
         if ($query->have_posts()) {
@@ -23,6 +23,7 @@
                 width="1/1" el_position="first last"]'
             ));
         }
+
     } else {
         if ($query->have_posts()) {
             echo '<h3>' . esc_html($args['pt_obj']->label) . '</h3>';

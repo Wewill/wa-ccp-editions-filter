@@ -57,6 +57,7 @@ function wa_ccpef_register_taxonomy() {
 		'meta_box_cb'        => 'post_tags_meta_box',
 		'rest_base'          => '',
 		'rewrite'            => [
+            'slug' => 'edition',
 			'with_front'   => false,
 			'hierarchical' => false,
 		],
@@ -227,10 +228,11 @@ function wa_ccpef_add_term_fields( $taxonomy ) {
 
             if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
                 foreach ( $terms as $term ) {
+                    $description =  ( function_exists('qtranxf_split') && function_exists('qtranxf_getLanguage') ) ? qtranxf_split($term->description)[qtranxf_getLanguage()] : $term->description;
                     ?>
                     <label>
                         <input type="checkbox" name="<?= WA_CCPEF_MIGRATE_TAXONOMY_FIELD?>[]" value="<?= esc_attr( $term->term_id ); ?>">
-                        <?= esc_html( $term->name ) . ' ( ' . esc_html( $term->description ) . ' )'; ?>
+                        <?= esc_html( $term->name ) . ' ( ' . esc_html( $description ) . ' )'; ?>
                     </label>
                     <?php
                 }
@@ -257,10 +259,11 @@ function wa_ccpef_edit_term_fields( $term, $taxonomy ) {
             if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
                 foreach ( $terms as $term_option ) {
                     $checked = ( is_array( $selected_editions ) && in_array( $term_option->term_id, $selected_editions ) ) ? 'checked' : '';
+                    $description =  ( function_exists('qtranxf_split') && function_exists('qtranxf_getLanguage') ) ? qtranxf_split($term_option->description)[qtranxf_getLanguage()] : $term_option->description;
                     ?>
                     <label>
                         <input type="checkbox" name="<?= WA_CCPEF_MIGRATE_TAXONOMY_FIELD?>[]" value="<?= esc_attr( $term_option->term_id ); ?>" <?= $checked; ?>>
-                        <?= esc_html( $term_option->name ) . ' ( ' . esc_html( $term_option->description ) . ' )'; ?>
+                        <?= esc_html( $term_option->name ) . ' ( ' . esc_html( $description ) . ' )'; ?>
                     </label><br>
                     <?php
                 }

@@ -263,9 +263,11 @@ class ccp_editions_filter {
 		/* Select button */
 		$html .= '<select class="editions-filter" name="ccp_editions_filter_bar_edition_term_slug" onchange="jQuery(\'#ccp_editions_filter_bar_form\').submit();">';
 		foreach($this->__editions as $edition) {
-			$html .= '<option value="'.$edition['slug'].'"'.(($this->current_edition == $edition['slug'])?' selected="selected"':'').'>'.$edition['description'].(($this->year_current_edition == $edition['slug'])?' *':'').'</option>';
+			// Get localized description
+			$description =  ( function_exists('qtranxf_split') && function_exists('qtranxf_getLanguage') ) ? qtranxf_split($edition['description'])[qtranxf_getLanguage()] : $edition['description'];
+			$html .= '<option value="'.$edition['slug'].'"'.(($this->current_edition == $edition['slug'])?' selected="selected"':'').'>'.$description.(($this->year_current_edition == $edition['slug'])?' *':'').'</option>';
 		}
-		$html .= '<option value="0"'.(($this->current_edition === "-1")?' selected="selected"':'').'>Show all editions</option>';
+		$html .= '<option value="0"'.(($this->current_edition === "-1")?' selected="selected"':'').'>'.__('Show all editions', WA_CCPEF_TEXTDOMAIN).'</option>';
 		$html .= '</select>';
 		/* Is edition online ? */
 		$html .= '<a class="button button-link button-small button-submit button-online"style="'.(($this->current_edition_films_are_online===true)?'background:#00ba5f;border-color:#00ba5f;':'background:#d84900;border-color:#d84900;').'" href="http://www.fifam.fr/wp-admin/options-general.php#current_edition_films_are_online">'.(($this->current_edition_films_are_online===true)?'ONLINE':'OFFLINE').'</a>';

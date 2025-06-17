@@ -177,7 +177,7 @@ function wa_editions_callback( $attributes ) {
 	$subtitle                          	= mb_get_block_field( $prefix . 'subtitle');
 	$displayed_post_types               = mb_get_block_field( $prefix . 'displayed_post_types');
 	$header                    			= mb_get_block_field( $prefix . 'header');
-	$display_current_edition             = mb_get_block_field( $prefix . 'current_edition');
+	$display_current_edition            = mb_get_block_field( $prefix . 'current_edition');
 	$displayed_edition                  = mb_get_block_field( $prefix . 'displayed_edition');
 	// $hide_center_column				= (mb_get_block_field( 'waff_e_hide_center_column' ))?'1':'0'; 
 
