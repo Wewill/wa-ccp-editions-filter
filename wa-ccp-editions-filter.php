@@ -94,6 +94,9 @@ function wa_ccpef_load() {
 	/* Load editions blocks */
 	require_once(WA_CCPEF_DIR . 'archives/wa-ccp_editions_block.inc.php');
 
+	/* Load shortcode for current edition header */
+	require_once(WA_CCPEF_DIR . 'includes/wa-ccp_editions_shortcode.inc.php');
+
 	/* Load editions filter class */
 	require_once(WA_CCPEF_DIR . 'filter/wa-ccp_editions_filter.inc.php');
 	$ccpef = new ccp_editions_filter();
