@@ -1,5 +1,10 @@
 <?php
+/**
+ * SPECIAL A&J.. To be modified
+ * 
+ */
 // Shortcode pour afficher le header de l'édition courante
+// [wa_current_edition_header]
 add_shortcode('wa_current_edition_header', 'wa_ccpef_shortcode_current_edition_header');
 
 function wa_ccpef_shortcode_current_edition_header($atts) {
@@ -111,3 +116,19 @@ function wa_ccpef_shortcode_current_edition_header($atts) {
     <?php
     return ob_get_clean();
 }
+
+// Shortcode pour afficher le bouton "Voir les éditions précédentes"
+// [wa_previous_editions_button]
+add_shortcode('wa_previous_editions_button', 'wa_ccpef_shortcode_previous_editions_button');
+
+function wa_ccpef_shortcode_previous_editions_button($atts) {
+    ob_start();
+    ?>
+    <div id="base-promo" class="sf-promo-bar promo-arrow container previous-editions" style="background-image: url('<?php echo esc_url(get_stylesheet_directory_uri() . '/images/previous_editions_bg.png'); ?>');"> 
+        <a href="/edition/" target="_self">Consultez<br>les éditions précédentes<br><i class="icon-right"></i></a>
+        <!--// CLOSE #base-promo //-->
+    </div>
+    <?php
+    return ob_get_clean();
+}; 
+
