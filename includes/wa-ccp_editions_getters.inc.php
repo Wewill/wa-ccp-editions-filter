@@ -67,7 +67,11 @@ function get_edition_vars() {
 	}
 
 	// Get current_edition_films_are_online option
-	$tmp_current_edition_films_are_online = get_option('current_edition_films_are_online');
+	$tmp_current_edition_films_are_online = wa_ccpef_get_is_edition_online_from_setting_page();
+	if ( $tmp_current_edition_films_are_online === null ) {
+		$tmp_current_edition_films_are_online = get_option('current_edition_films_are_online');
+	}
+	//$tmp_current_edition_films_are_online = get_option('current_edition_films_are_online');
 	$current_edition_films_are_online = ( !empty($tmp_current_edition_films_are_online) && $tmp_current_edition_films_are_online == 1)?true:false; 
 
 	// Verify if current edition is set 
