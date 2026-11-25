@@ -107,10 +107,10 @@ function wa_ccpef_load() {
 		include(WA_CCPEF_DIR . 'filter/wa-ccp_editions_pre_get_posts.php');
 	}
 
-	/* Frontend filter */
-	if ( !is_admin() ) {
-		include(WA_CCPEF_DIR . 'archives/wa-ccp_editions_archives.php');
-	}
+	/* Archives rewrite rule & query var
+	 * Loaded on admin too : rewrite rules are mostly flushed from admin (permalinks, updates, CPT plugins...),
+	 * if the rule is not registered there, it is dropped and /edition/ returns a 404. */
+	require_once(WA_CCPEF_DIR . 'archives/wa-ccp_editions_archives.php');
 
 }
 
