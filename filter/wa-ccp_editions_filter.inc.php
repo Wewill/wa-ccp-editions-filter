@@ -139,7 +139,19 @@ class ccp_editions_filter {
 		// Get terms
 		global $wpdb;
 		$field = WA_CCPEF_MIGRATE_FIELD_CURRENT ? WA_CCPEF_MIGRATE_FIELD_CURRENT : 'wpcf-e-current-edition';
-		$sql="SELECT ".$wpdb->prefix."terms.term_id, name, slug, description, meta_value as current FROM ".$wpdb->prefix."term_taxonomy, ".$wpdb->prefix."terms LEFT JOIN ".$wpdb->prefix."termmeta ON ".$wpdb->prefix."termmeta.term_id = ".$wpdb->prefix."terms.term_id AND meta_key = '".$field."' WHERE ".$wpdb->prefix."term_taxonomy.term_id = ".$wpdb->prefix."terms.term_id AND ".$wpdb->prefix."term_taxonomy.taxonomy = 'edition' ORDER BY slug DESC;";
+		$field_year = WA_CCPEF_MIGRATE_FIELD_YEAR ? WA_CCPEF_MIGRATE_FIELD_YEAR : 'wpcf-e-year';
+		// Order by year (e-year) DESC, then slug DESC as fallback (editions without year last)
+		$sql = $wpdb->prepare(
+			"SELECT t.term_id, t.name, t.slug, tt.description, tm_current.meta_value AS current
+			FROM {$wpdb->prefix}terms AS t
+			INNER JOIN {$wpdb->prefix}term_taxonomy AS tt ON tt.term_id = t.term_id
+			LEFT JOIN {$wpdb->prefix}termmeta AS tm_current ON tm_current.term_id = t.term_id AND tm_current.meta_key = %s
+			LEFT JOIN {$wpdb->prefix}termmeta AS tm_year ON tm_year.term_id = t.term_id AND tm_year.meta_key = %s
+			WHERE tt.taxonomy = 'edition'
+			ORDER BY CAST(tm_year.meta_value AS SIGNED) DESC, t.slug DESC;",
+			$field,
+			$field_year
+		);
 		$this->__editions = $wpdb->get_results($sql , ARRAY_A);
 		if (array_key_exists('ccp_editions_filter_bar_edition_term_slug', $_POST)) {
 			$term_slug = $_POST['ccp_editions_filter_bar_edition_term_slug'];
@@ -257,6 +269,7 @@ class ccp_editions_filter {
 	}
 
 	public function display_editions_filter() {
+		print_r($this->current_edition);
 		$html = '<form method="POST" id="ccp_editions_filter_bar_form">';
 		/* Badge */ 
 		$html .= '<span class="badge-editions-filter dashicons-before dashicons-image-filter" aria-hidden="true"></span>';

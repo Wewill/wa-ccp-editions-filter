@@ -131,6 +131,35 @@ function wa_ccpef_taxonomy_edition_columns( $columns ) {
 	//return $columns;
 }
 
+// Order editions by year (e-year) DESC on the editions admin list (edit-tags.php?taxonomy=edition)
+add_filter( 'get_terms_args', 'wa_ccpef_order_editions_by_year', 10, 2 );
+function wa_ccpef_order_editions_by_year( $args, $taxonomies ) {
+	global $pagenow;
+
+	if ( ! is_admin() || $pagenow !== 'edit-tags.php' ) return $args;
+	if ( (array) $taxonomies !== array( 'edition' ) ) return $args;
+	// Keep manual column sorting (click on a column header), count queries and existing meta queries untouched
+	if ( ! empty( $_GET['orderby'] ) || ( isset( $args['fields'] ) && $args['fields'] === 'count' ) || ! empty( $args['meta_query'] ) ) return $args;
+
+	$year_key = WA_CCPEF_MIGRATE_FIELD_YEAR ? WA_CCPEF_MIGRATE_FIELD_YEAR : 'wpcf-e-year';
+	$args['meta_query'] = array(
+		'relation' => 'OR',
+		'e_year'   => array(
+			'key'     => $year_key,
+			'type'    => 'NUMERIC',
+			'compare' => 'EXISTS',
+		),
+		array( // Keep editions without year (listed last)
+			'key'     => $year_key,
+			'compare' => 'NOT EXISTS',
+		),
+	);
+	$args['orderby'] = 'e_year';
+	$args['order']   = 'DESC';
+
+	return $args;
+}
+
 add_filter( 'manage_edition_custom_column', 'wa_ccpef_taxonomy_manage_edition_columns', 10, 3);
 function wa_ccpef_taxonomy_manage_edition_columns($out, $column_name, $term_id) {
 	$out = '';
