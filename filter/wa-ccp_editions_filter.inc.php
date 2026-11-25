@@ -270,7 +270,7 @@ class ccp_editions_filter {
 		$html .= '<option value="0"'.(($this->current_edition === "-1")?' selected="selected"':'').'>'.__('Show all editions', WA_CCPEF_TEXTDOMAIN).'</option>';
 		$html .= '</select>';
 		/* Is edition online ? */
-		$html .= '<a class="button button-link button-small button-submit button-online"style="'.(($this->current_edition_films_are_online===true)?'background:#00ba5f;border-color:#00ba5f;':'background:#d84900;border-color:#d84900;').'" href="http://www.fifam.fr/wp-admin/options-general.php#current_edition_films_are_online">'.(($this->current_edition_films_are_online===true)?'ONLINE':'OFFLINE').'</a>';
+		$html .= '<a class="button button-link button-small button-submit button-online"style="'.(($this->current_edition_films_are_online===true)?'background:#00ba5f;border-color:#00ba5f;':'background:#d84900;border-color:#d84900;').'" href="/wp-admin/options-general.php#current_edition_films_are_online">'.(($this->current_edition_films_are_online===true)?'ONLINE':'OFFLINE').'</a>';
 		$html .= '</form>';
 		
 		return $html;
