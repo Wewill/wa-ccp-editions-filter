@@ -96,7 +96,8 @@ get_header(); ?>
                 </ul>
             <?php endif; ?>
     <?php else : ?>
-        <p><?php esc_html_e('No posts found.', 'wa-ccpef'); ?></p>
+        <!-- <p><?php esc_html_e('No posts found.', 'wa-ccpef'); ?></p> -->
+        <p>Il n\'y a pas encore de jardins dans cette édition...</p>
     <?php endif; ?>
 
 </div>
@@ -150,6 +151,8 @@ get_header(); ?>
         <?= $edition_content_after; ?>
     </div>
 <?php endif; ?>
+
+<?php wa_ccpef_shortcode_previous_editions_button(); ?>
 
 <div class="blank_spacer col-sm-12" style="height:80px;"></div>
 <div class="clearfix"></div>
