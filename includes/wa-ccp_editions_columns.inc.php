@@ -121,8 +121,10 @@ function wa_ccpef_taxonomy_edition_columns( $columns ) {
 		print( $col_key );
 		if ($col_key=='name') // Put the Thumbnail column before the Title column
 			$newcols['e-image'] = __('<span class="dashicons-before dashicons-visibility" style="color:silver;"></span>', 'wa-rsfp');
-			if ($col_key=='description') // Put the Thumbnail column before the Desc. column
+		if ($col_key=='description') { // Put the Current edition & Color columns before the Desc. column
+			$newcols['e-current-edition'] = __('Current', 'wa_ccpef');
 			$newcols['e-color'] = __('Color', 'wa-rsfp');
+		}
 		$newcols[$col_key] = $col_title;
 	}
 	return $newcols;
@@ -137,8 +139,11 @@ function wa_ccpef_taxonomy_manage_edition_columns($out, $column_name, $term_id) 
 		case 'e-image' :
 			wa_ccpef_get_image_fromid(get_term_meta( $term_id, $prefix . $column_name, true));			
 			break;
+		case 'e-current-edition' :
+			wa_ccpef_get_current_edition(get_term_meta( $term_id, $prefix . $column_name, true));
+			break;
 		case 'e-color' :
-			wa_ccpef_get_color(get_term_meta( $term_id, $prefix . $column_name, true));			
+			wa_ccpef_get_color(get_term_meta( $term_id, $prefix . $column_name, true));
 			break;
 			default:
             break;
@@ -195,7 +200,15 @@ function wa_ccpef_get_image_fromid($attachment_id) {
 		printf( __( '<div class="tax-img-holder"><img class="wpcf-offre-visuel" src="%s" alt="Image" width="50" /></div>' ), $image[0] );
 }
 
-// Get color 
+// Get current edition (checkbox)
+function wa_ccpef_get_current_edition($fd) {
+	if ( empty( $fd ) )
+		echo '<span style="color:silver;">—</span>';
+	else
+		printf( '<span class="dashicons dashicons-yes" style="color:#00a32a;" title="%1$s"></span><span class="screen-reader-text">%1$s</span>', esc_attr__( 'Current edition', 'wa_ccpef' ) );
+}
+
+// Get color
 function wa_ccpef_get_color($fd) {
 	if ( empty( $fd ) )
 		echo __( '<span style="color:silver;">—</span>' ); // marker.png
