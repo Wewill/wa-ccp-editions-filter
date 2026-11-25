@@ -28,9 +28,24 @@ get_header(); ?>
 
 
 
+    // Order by year (e-year) DESC : most recent first, editions without year last
     $terms = get_terms([
-        'taxonomy' => 'edition',
+        'taxonomy'   => 'edition',
         'hide_empty' => false,
+        'meta_query' => [
+            'relation' => 'OR',
+            'e_year'   => [
+                'key'     => $prefix . 'e-year',
+                'type'    => 'NUMERIC',
+                'compare' => 'EXISTS',
+            ],
+            [
+                'key'     => $prefix . 'e-year',
+                'compare' => 'NOT EXISTS',
+            ],
+        ],
+        'orderby'    => 'e_year',
+        'order'      => 'DESC',
     ]);
 
     if (!empty($terms) && !is_wp_error($terms)) {
