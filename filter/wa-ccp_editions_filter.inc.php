@@ -269,7 +269,6 @@ class ccp_editions_filter {
 	}
 
 	public function display_editions_filter() {
-		print_r($this->current_edition);
 		$html = '<form method="POST" id="ccp_editions_filter_bar_form">';
 		/* Badge */ 
 		$html .= '<span class="badge-editions-filter dashicons-before dashicons-image-filter" aria-hidden="true"></span>';
