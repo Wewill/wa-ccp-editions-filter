@@ -97,7 +97,7 @@ get_header(); ?>
             <?php endif; ?>
     <?php else : ?>
         <!-- <p><?php esc_html_e('No posts found.', 'wa-ccpef'); ?></p> -->
-        <p>Il n\'y a pas encore de jardins dans cette édition...</p>
+        <p>Il n'y a pas encore de jardins dans cette édition...<br/></p>
     <?php endif; ?>
 
 </div>
