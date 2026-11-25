@@ -226,9 +226,12 @@ function wa_ccpef_get_filtermedias_from_setting_page() {
     return rwmb_meta( $prefix . 'filter_medias_by_edition_year', [ 'object_type' => 'setting' ], 'archives-edition-filter' );
 }
 // is_edition_online
+// get_option() instead of rwmb_meta() : called on plugins_loaded, before Meta Box registers its fields (init)
 function wa_ccpef_get_is_edition_online_from_setting_page() {
     $prefix = 'wa_ccpef_';
-    return rwmb_meta( $prefix . 'is_edition_online', [ 'object_type' => 'setting' ], 'archives-edition-filter' );
+    // return rwmb_meta( $prefix . 'is_edition_online', [ 'object_type' => 'setting' ], 'archives-edition-filter' );
+    $settings = get_option('archives-edition-filter');
+    return isset($settings[ $prefix . 'is_edition_online']) ? $settings[ $prefix . 'is_edition_online'] : null;
 }
 
 function wa_ccpef_get_orderbyposttypes_from_setting_page() {
