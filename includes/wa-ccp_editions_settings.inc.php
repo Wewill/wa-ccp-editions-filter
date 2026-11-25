@@ -87,6 +87,17 @@ function wa_ccpef_settings_fields( $meta_boxes ) {
                 'clone_empty_start' => false,
                 'hide_from_rest'    => false,
             ],
+            [
+                'name'              => __( 'Current edition is online ?', 'wa_ccpef' ),
+                'id'                => $prefix . 'is_edition_online',
+                'type'              => 'switch',
+                'label_description' => __( 'Check if you want to show current edition online', 'wa_ccpef' ),
+                'std'               => true,
+                'required'          => false,
+                'clone'             => false,
+                'clone_empty_start' => false,
+                'hide_from_rest'    => false,
+            ],
         ],
     ];
 
@@ -209,9 +220,15 @@ function wa_ccpef_get_taxonomies_from_setting_page() {
     return rwmb_meta( $prefix . 'allowed_taxonomy', [ 'object_type' => 'setting' ], 'archives-edition-filter' );
 }
 
+//filter_medias_by_edition_year
 function wa_ccpef_get_filtermedias_from_setting_page() {
     $prefix = 'wa_ccpef_';
     return rwmb_meta( $prefix . 'filter_medias_by_edition_year', [ 'object_type' => 'setting' ], 'archives-edition-filter' );
+}
+// is_edition_online
+function wa_ccpef_get_is_edition_online_from_setting_page() {
+    $prefix = 'wa_ccpef_';
+    return rwmb_meta( $prefix . 'is_edition_online', [ 'object_type' => 'setting' ], 'archives-edition-filter' );
 }
 
 function wa_ccpef_get_orderbyposttypes_from_setting_page() {

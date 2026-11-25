@@ -184,6 +184,7 @@ class ccp_editions_filter {
 	
 		// ADD WIL Get current_edition_films_are_online option
 		$current_edition_films_are_online = get_option('current_edition_films_are_online');
+		$current_edition_films_are_online = wa_ccpef_get_filtermedias_from_setting_page(); // @TODO > Migrate ≠ fifam 
 		$this->current_edition_films_are_online = ( !empty($current_edition_films_are_online) && $current_edition_films_are_online == 1)?true:false; 
 		//wp_die('<pre>'.$this->current_edition_films_are_online.'</pre>');	
 

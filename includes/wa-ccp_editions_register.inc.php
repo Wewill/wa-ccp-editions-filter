@@ -42,7 +42,7 @@ function wa_ccpef_register_taxonomy() {
 		'description'        => esc_html__( 'Categorizes post.s & taxonomy.s in a edition (year)', 'wa_ccpef' ),
 		'public'             => true,
 		'publicly_queryable' => true,
-		'hierarchical'       => false,
+		'hierarchical'       => true,
 		'show_ui'            => true,
 		'show_in_menu'       => true,
 		'show_in_nav_menus'  => true,
@@ -59,7 +59,7 @@ function wa_ccpef_register_taxonomy() {
 		'rewrite'            => [
             'slug' => 'edition',
 			'with_front'   => false,
-			'hierarchical' => false,
+			'hierarchical' => true,
 		],
 	];
     // Register the taxonomy initially
