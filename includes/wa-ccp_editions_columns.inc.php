@@ -121,7 +121,8 @@ function wa_ccpef_taxonomy_edition_columns( $columns ) {
 		print( $col_key );
 		if ($col_key=='name') // Put the Thumbnail column before the Title column
 			$newcols['e-image'] = __('<span class="dashicons-before dashicons-visibility" style="color:silver;"></span>', 'wa-rsfp');
-		if ($col_key=='description') { // Put the Current edition & Color columns before the Desc. column
+		if ($col_key=='description') { // Put the Year, Current edition & Color columns before the Desc. column
+			$newcols['e-year'] = __('Year', 'wa_ccpef');
 			$newcols['e-current-edition'] = __('Current', 'wa_ccpef');
 			$newcols['e-color'] = __('Color', 'wa-rsfp');
 		}
@@ -132,14 +133,17 @@ function wa_ccpef_taxonomy_edition_columns( $columns ) {
 }
 
 // Order editions by year (e-year) DESC on the editions admin list (edit-tags.php?taxonomy=edition)
-add_filter( 'get_terms_args', 'wa_ccpef_order_editions_by_year', 10, 2 );
-function wa_ccpef_order_editions_by_year( $args, $taxonomies ) {
+// NB: 'parse_term_query' (not 'get_terms_args') because WP_Term_Query parses meta_query & orderby
+// before 'get_terms_args' is applied, so a meta orderby set there falls back to 't.name'.
+add_action( 'parse_term_query', 'wa_ccpef_order_editions_by_year' );
+function wa_ccpef_order_editions_by_year( $query ) {
 	global $pagenow;
 
-	if ( ! is_admin() || $pagenow !== 'edit-tags.php' ) return $args;
-	if ( (array) $taxonomies !== array( 'edition' ) ) return $args;
+	if ( ! is_admin() || $pagenow !== 'edit-tags.php' ) return;
+	$args = &$query->query_vars;
+	if ( (array) $args['taxonomy'] !== array( 'edition' ) ) return;
 	// Keep manual column sorting (click on a column header), count queries and existing meta queries untouched
-	if ( ! empty( $_GET['orderby'] ) || ( isset( $args['fields'] ) && $args['fields'] === 'count' ) || ! empty( $args['meta_query'] ) ) return $args;
+	if ( ! empty( $_GET['orderby'] ) || $args['fields'] === 'count' || ! empty( $args['meta_query'] ) ) return;
 
 	$year_key = WA_CCPEF_MIGRATE_FIELD_YEAR ? WA_CCPEF_MIGRATE_FIELD_YEAR : 'wpcf-e-year';
 	$args['meta_query'] = array(
@@ -156,8 +160,6 @@ function wa_ccpef_order_editions_by_year( $args, $taxonomies ) {
 	);
 	$args['orderby'] = 'e_year';
 	$args['order']   = 'DESC';
-
-	return $args;
 }
 
 add_filter( 'manage_edition_custom_column', 'wa_ccpef_taxonomy_manage_edition_columns', 10, 3);
@@ -167,6 +169,10 @@ function wa_ccpef_taxonomy_manage_edition_columns($out, $column_name, $term_id) 
     switch ($column_name) {
 		case 'e-image' :
 			wa_ccpef_get_image_fromid(get_term_meta( $term_id, $prefix . $column_name, true));			
+			break;
+		case 'e-year' :
+			$year = get_term_meta( $term_id, WA_CCPEF_MIGRATE_FIELD_YEAR ? WA_CCPEF_MIGRATE_FIELD_YEAR : $prefix . $column_name, true );
+			echo ( $year !== '' && $year !== false ) ? esc_html( $year ) : '<span style="color:silver;">—</span>';
 			break;
 		case 'e-current-edition' :
 			wa_ccpef_get_current_edition(get_term_meta( $term_id, $prefix . $column_name, true));

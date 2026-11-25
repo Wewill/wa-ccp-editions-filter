@@ -273,16 +273,16 @@ class ccp_editions_filter {
 		$html = '<form method="POST" id="ccp_editions_filter_bar_form">';
 		/* Badge */ 
 		$html .= '<span class="badge-editions-filter dashicons-before dashicons-image-filter" aria-hidden="true"></span>';
-		//if ( WA_CCPEF_DEBUG === true ) {
+		if ( WA_CCPEF_DEBUG === true ) {
 			$html .= "<code class='debug'>c:".$this->current_edition."</code>";
 			$html .= "<code class='debug'>s:".$edition['slug']."</code>";
-		//}
+		}
 		/* Select button */
 		$html .= '<select class="editions-filter" name="ccp_editions_filter_bar_edition_term_slug" onchange="jQuery(\'#ccp_editions_filter_bar_form\').submit();">';
 		foreach($this->__editions as $edition) {
 			// Get localized description
 			$description =  ( function_exists('qtranxf_split') && function_exists('qtranxf_getLanguage') ) ? qtranxf_split($edition['description'])[qtranxf_getLanguage()] : $edition['description'];
-			$html .= '<option value="'.$edition['slug'].'"'.(($this->current_edition == $edition['slug'])?' selected="selected"':'').'>'.$description.(($this->year_current_edition == $edition['slug'])?' *':'').'</option>';
+			$html .= '<option value="'.$edition['slug'].'"'.(($this->current_edition == $edition['slug'])?' selected="selected"':'').'>'.$description.(($this->current_edition == $edition['slug'])?' ©':'')..(($this->year_current_edition == $edition['slug'])?' *':'').'</option>';
 		}
 		$html .= '<option value="0"'.(($this->current_edition === "-1")?' selected="selected"':'').'>'.__('Show all editions', WA_CCPEF_TEXTDOMAIN).'</option>';
 		$html .= '</select>';
