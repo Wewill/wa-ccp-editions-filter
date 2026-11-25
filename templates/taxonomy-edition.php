@@ -152,7 +152,7 @@ get_header(); ?>
     </div>
 <?php endif; ?>
 
-<?php wa_ccpef_shortcode_previous_editions_button(); ?>
+<?php echo wa_ccpef_shortcode_previous_editions_button(); ?>
 
 <div class="blank_spacer col-sm-12" style="height:80px;"></div>
 <div class="clearfix"></div>

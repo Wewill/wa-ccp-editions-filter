@@ -121,7 +121,7 @@ function wa_ccpef_shortcode_current_edition_header($atts) {
 // [wa_previous_editions_button]
 add_shortcode('wa_previous_editions_button', 'wa_ccpef_shortcode_previous_editions_button');
 
-function wa_ccpef_shortcode_previous_editions_button($atts) {
+function wa_ccpef_shortcode_previous_editions_button($atts = []) {
     ob_start();
     ?>
     <div id="base-promo" class="sf-promo-bar promo-arrow container previous-editions" style="background-image: url('<?php echo esc_url(get_stylesheet_directory_uri() . '/images/previous_editions_bg.png'); ?>');"> 
