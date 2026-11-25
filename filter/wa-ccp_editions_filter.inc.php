@@ -282,7 +282,7 @@ class ccp_editions_filter {
 		foreach($this->__editions as $edition) {
 			// Get localized description
 			$description =  ( function_exists('qtranxf_split') && function_exists('qtranxf_getLanguage') ) ? qtranxf_split($edition['description'])[qtranxf_getLanguage()] : $edition['description'];
-			$html .= '<option value="'.$edition['slug'].'"'.(($this->current_edition == $edition['slug'])?' selected="selected"':'').'>'.$description.(($this->current_edition == $edition['slug'])?' ©':'')..(($this->year_current_edition == $edition['slug'])?' *':'').'</option>';
+			$html .= '<option value="'.$edition['slug'].'"'.(($this->current_edition == $edition['slug'])?' selected="selected"':'').'>'.$description.(($this->current_edition == $edition['slug'])?' ©':'').(($this->year_current_edition == $edition['slug'])?' *':'').'</option>';
 		}
 		$html .= '<option value="0"'.(($this->current_edition === "-1")?' selected="selected"':'').'>'.__('Show all editions', WA_CCPEF_TEXTDOMAIN).'</option>';
 		$html .= '</select>';
