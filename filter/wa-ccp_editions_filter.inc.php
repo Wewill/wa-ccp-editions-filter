@@ -283,10 +283,10 @@ class ccp_editions_filter {
 			$description =  ( function_exists('qtranxf_split') && function_exists('qtranxf_getLanguage') ) ? qtranxf_split($edition['description'])[qtranxf_getLanguage()] : $edition['description'];
 			$html .= '<option value="'.$edition['slug'].'"'.(($this->current_edition == $edition['slug'])?' selected="selected"':'').'>'.$description.(($this->current_edition == $edition['slug'])?' ©':'').(($this->year_current_edition == $edition['slug'])?' *':'').'</option>';
 		}
-		$html .= '<option value="0"'.(($this->current_edition === "-1")?' selected="selected"':'').'>'.__('Show all editions', WA_CCPEF_TEXTDOMAIN).'</option>';
+		$html .= '<option value="0"'.(($this->current_edition === "-1")?' selected="selected"':'').'>'.__( 'Show all editions', 'wa-ccpef' ).'</option>';
 		$html .= '</select>';
 		/* Is edition online ? */
-		$html .= '<a class="button button-link button-small button-submit button-online"style="'.(($this->current_edition_films_are_online===true)?'background:#00ba5f;border-color:#00ba5f;':'background:#d84900;border-color:#d84900;').'" href="/wp-admin/options-general.php#current_edition_films_are_online">'.(($this->current_edition_films_are_online===true)?'ONLINE':'OFFLINE').'</a>';
+		$html .= '<a class="button button-link button-small button-submit button-online"style="'.(($this->current_edition_films_are_online===true)?'background:#00ba5f;border-color:#00ba5f;':'background:#d84900;border-color:#d84900;').'" href="/wp-admin/options-general.php#current_edition_films_are_online">'.(($this->current_edition_films_are_online===true)? __( 'ONLINE', 'wa-ccpef' ) : __( 'OFFLINE', 'wa-ccpef' )).'</a>';
 		$html .= '</form>';
 		
 		return $html;

@@ -6,15 +6,15 @@ Define admin settings
 add_filter( 'mb_settings_pages', 'wa_ccpef_settings', 50);
 function wa_ccpef_settings( $settings_pages ) {
 	$settings_pages[] = [
-        'menu_title'      => __( 'Archives & edition filter', 'wa_ccpef' ),
+        'menu_title'      => __( 'Archives & edition filter', 'wa-ccpef' ),
         'id'              => 'archives-edition-filter',
         'position'        => 50,
         'parent'          => 'options-general.php',
         'class'           => 'wa_ccpef',
         'tabs'            => [
-            'edition'  => 'Edition',
-            'archives' => 'Archives',
-            'template' => 'Template',
+            'edition'  => __( 'Edition', 'wa-ccpef' ),
+            'archives' => __( 'Archives', 'wa-ccpef' ),
+            'template' => __( 'Template', 'wa-ccpef' ),
         ],
         'tab_style'       => 'left',
         // 'help_tabs'       => [
@@ -42,16 +42,16 @@ function wa_ccpef_settings_fields( $meta_boxes ) {
     $prefix = 'wa_ccpef_';
 
     $meta_boxes[] = [
-        'title'          => __( 'Edition settings', 'wa_ccpef' ),
+        'title'          => __( 'Edition settings', 'wa-ccpef' ),
         'id'             => 'edition-settings',
         'settings_pages' => ['archives-edition-filter'],
         'tab'            => 'edition',
         'fields'         => [
             [
-                'name'              => __( 'Choose edition filter name', 'wa_ccpef' ),
+                'name'              => __( 'Choose edition filter name', 'wa-ccpef' ),
                 'id'                => $prefix . 'choose_edition_filter_name',
                 'type'              => 'text',
-                'std'               => __( 'Édition', 'wa_ccpef' ),
+                'std'               => __( 'Edition', 'wa-ccpef' ),
                 'required'          => true,
                 'disabled'          => false,
                 'readonly'          => false,
@@ -61,7 +61,7 @@ function wa_ccpef_settings_fields( $meta_boxes ) {
                 'limit_type'        => 'character',
             ],
             [
-                'name'            => __( 'Allowed post type.s', 'wa_ccpef' ),
+                'name'            => __( 'Allowed post type.s', 'wa-ccpef' ),
                 'id'              => $prefix . 'allowed_post',
                 'type'            => 'checkbox_list',
                 'inline'          => true,
@@ -69,7 +69,7 @@ function wa_ccpef_settings_fields( $meta_boxes ) {
                 'options'         => wa_ccpef_posts_options_callback(),
             ],
             [
-                'name'            => __( 'Allowed taxonomy.s', 'wa_ccpef' ),
+                'name'            => __( 'Allowed taxonomy.s', 'wa-ccpef' ),
                 'id'              => $prefix . 'allowed_taxonomy',
                 'type'            => 'checkbox_list',
                 'inline'          => true,
@@ -77,10 +77,10 @@ function wa_ccpef_settings_fields( $meta_boxes ) {
                 'options'         => wa_ccpef_taxonomies_options_callback(),
             ],
             [
-                'name'              => __( 'Filter Medias by edition year ?', 'wa_ccpef' ),
+                'name'              => __( 'Filter Medias by edition year ?', 'wa-ccpef' ),
                 'id'                => $prefix . 'filter_medias_by_edition_year',
                 'type'              => 'switch',
-                'label_description' => __( 'Check if you want to filter all medias by year of the edition, and switch between medias by switching edition', 'wa_ccpef' ),
+                'label_description' => __( 'Check if you want to filter all medias by year of the edition, and switch between medias by switching edition', 'wa-ccpef' ),
                 'std'               => true,
                 'required'          => false,
                 'clone'             => false,
@@ -88,10 +88,10 @@ function wa_ccpef_settings_fields( $meta_boxes ) {
                 'hide_from_rest'    => false,
             ],
             [
-                'name'              => __( 'Current edition is online ?', 'wa_ccpef' ),
+                'name'              => __( 'Current edition is online ?', 'wa-ccpef' ),
                 'id'                => $prefix . 'is_edition_online',
                 'type'              => 'switch',
-                'label_description' => __( 'Check if you want to show current edition online', 'wa_ccpef' ),
+                'label_description' => __( 'Check if you want to show current edition online', 'wa-ccpef' ),
                 'std'               => true,
                 'required'          => false,
                 'clone'             => false,
@@ -102,16 +102,16 @@ function wa_ccpef_settings_fields( $meta_boxes ) {
     ];
 
     $meta_boxes[] = [
-        'title'          => __( 'Archives settings', 'wa_ccpef' ),
+        'title'          => __( 'Archives settings', 'wa-ccpef' ),
         'id'             => 'archives-settings',
         'settings_pages' => ['archives-edition-filter'],
         'tab'            => 'archives',
         'fields'         => [
             [
-                'name'              => __( 'Choose archives name', 'wa_ccpef' ),
+                'name'              => __( 'Choose archives name', 'wa-ccpef' ),
                 'id'                => $prefix . 'choose_archives_name',
                 'type'              => 'text',
-                'std'               => __( 'Archives', 'wa_ccpef' ),
+                'std'               => __( 'Archives', 'wa-ccpef' ),
                 'required'          => true,
                 'disabled'          => false,
                 'readonly'          => false,
@@ -121,10 +121,10 @@ function wa_ccpef_settings_fields( $meta_boxes ) {
                 'limit_type'        => 'character',
             ],
             [
-                'name'              => __( 'Display posts ordered by post types ?', 'wa_ccpef' ),
+                'name'              => __( 'Display posts ordered by post types ?', 'wa-ccpef' ),
                 'id'                => $prefix . 'order_by_posttype',
                 'type'              => 'switch',
-                'label_description' => __( 'Check if you want to display post types hierachy or a sinple list', 'wa_ccpef' ),
+                'label_description' => __( 'Check if you want to display post types hierachy or a sinple list', 'wa-ccpef' ),
                 'std'               => true,
                 'required'          => false,
                 'clone'             => false,
@@ -136,13 +136,13 @@ function wa_ccpef_settings_fields( $meta_boxes ) {
     ];
 
     $meta_boxes[] = [
-        'title'          => __( 'Template settings', 'wa_ccpef' ),
+        'title'          => __( 'Template settings', 'wa-ccpef' ),
         'id'             => 'template-settings',
         'settings_pages' => ['archives-edition-filter'],
         'tab'            => 'template',
         'fields'         => [
             [
-                'name'              => __( 'Override default with template name', 'wa_ccpef' ),
+                'name'              => __( 'Override default with template name', 'wa-ccpef' ),
                 'id'                => $prefix . 'template_name',
                 'type'              => 'text',
                 'required'          => false,
@@ -172,7 +172,7 @@ function wa_ccpef_posts_options_callback() {
             continue;
         }
         $post_type_object = get_post_type_object( $post_type );
-        $options[ $post_type ] = $post_type_object ? $post_type_object->labels->singular_name : __( $post_type, 'wa_ccpef' );
+        $options[ $post_type ] = $post_type_object ? $post_type_object->labels->singular_name : $post_type;
     }
     return $options;
 }
@@ -190,7 +190,7 @@ function wa_ccpef_taxonomies_options_callback() {
             continue;
         }
         $taxonomy_object = get_taxonomy( $taxonomy );
-        $options[ $taxonomy ] = $taxonomy_object ? $taxonomy_object->labels->singular_name : __( $taxonomy, 'wa_ccpef' );
+        $options[ $taxonomy ] = $taxonomy_object ? $taxonomy_object->labels->singular_name : $taxonomy;
     }
     return $options;
 }
@@ -210,7 +210,7 @@ function wa_ccpef_get_posts_from_setting_page_as_options() {
     $options = [];
     foreach ( $post_types as $post_type ) {
         $post_type_object = get_post_type_object( $post_type );
-        $options[ $post_type ] = $post_type_object ? $post_type_object->labels->singular_name : __( $post_type, 'wa_ccpef' );
+        $options[ $post_type ] = $post_type_object ? $post_type_object->labels->singular_name : $post_type;
     }
     return $options;
 }

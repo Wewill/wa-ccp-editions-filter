@@ -52,12 +52,8 @@ function wa_ccpef_shortcode_current_edition_header($atts) {
         $start = DateTime::createFromFormat('Y-m-d', $edition_start_date);
         $end = DateTime::createFromFormat('Y-m-d', $edition_end_date);
         if ($start && $end) {
-            $months = [
-                1 => 'JAN', 2 => 'FEV', 3 => 'MAR', 4 => 'AVR', 5 => 'MAI', 6 => 'JUN',
-                7 => 'JUI', 8 => 'AOU', 9 => 'SEP', 10 => 'OCT', 11 => 'NOV', 12 => 'DEC'
-            ];
-            $start_str = $start->format('j') . ' ' . $months[(int)$start->format('n')];
-            $end_str = $end->format('j') . ' ' . $months[(int)$end->format('n')] . ' ' . $end->format('Y');
+            $start_str = $start->format('j') . ' ' . wa_ccpef_get_month_abbr($start->format('n'));
+            $end_str = $end->format('j') . ' ' . wa_ccpef_get_month_abbr($end->format('n')) . ' ' . $end->format('Y');
             $edition_date_string = $start_str . ' - ' . $end_str;
         }
     }
@@ -70,12 +66,13 @@ function wa_ccpef_shortcode_current_edition_header($atts) {
             <?php
             // Afficher l'image si elle existe (champ personnalisé ACF ou autre)
             if ($edition_image_url) {
-                    echo '<img src="' . esc_url($edition_image_url) . '" alt="Affiche ' . $edition_name . '" style="max-width:100%;border-radius:8px;box-shadow:0 2px 12px #0001;">';
+                    /* translators: %s: edition name */
+                    echo '<img src="' . esc_url($edition_image_url) . '" alt="' . esc_attr(sprintf(__('%s poster', 'wa-ccpef'), $edition->name)) . '" style="max-width:100%;border-radius:8px;box-shadow:0 2px 12px #0001;">';
             }
             ?>
         </div>
         <div class="" style="flex:2 1 350px;min-width:250px;align-self:center;text-align:left;justify-content:center;">
-            <h6 class="edition-label" style="color:#b0b0b0;">EDITION EN COURS</h6>
+            <h6 class="edition-label" style="color:#b0b0b0;"><?php esc_html_e('CURRENT EDITION', 'wa-ccpef'); ?></h6>
             
             <div class="heading-text" >
                 <h2 class="edition-title" style="font-size:2.2rem;margin:0.5rem 0;margin-bottom:4rem;"><?php echo $edition_name; ?></h2>
@@ -108,7 +105,7 @@ function wa_ccpef_shortcode_current_edition_header($atts) {
 
             <?php if (!is_wp_error($edition_link)) : ?>
                 <a class="edition-btn" href="<?php echo esc_url($edition_link); ?>" style="background:#ff2d17;color:#fff;padding:0.7rem 2rem;border-radius:8px;text-decoration:none;font-weight:bold;display:inline-block;transition:background 0.2s;font-family:Fabrikat;">
-                    CONSULTER <span style="margin-left:1rem;">→</span>
+                    <?php echo esc_html_x('VIEW', 'current edition button', 'wa-ccpef'); ?> <span style="margin-left:1rem;">→</span>
                 </a>
             <?php endif; ?>
         </div>
@@ -125,7 +122,7 @@ function wa_ccpef_shortcode_previous_editions_button($atts = []) {
     ob_start();
     ?>
     <div id="base-promo" class="sf-promo-bar promo-arrow container previous-editions" style="background-image: url('<?php echo esc_url(get_stylesheet_directory_uri() . '/images/previous_editions_bg.png'); ?>');"> 
-        <a href="/edition/" target="_self">Consultez<br>les éditions précédentes<br><i class="icon-right"></i></a>
+        <a href="/edition/" target="_self"><?php echo wp_kses(__('See<br>previous editions', 'wa-ccpef'), ['br' => []]); ?><br><i class="icon-right"></i></a>
         <!--// CLOSE #base-promo //-->
     </div>
     <?php

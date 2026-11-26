@@ -44,9 +44,10 @@ define('WA_CCPEF_DEBUG', false);
 // -------------------
 define('WA_CCPEF_DIR', plugin_dir_path( __FILE__ ) );
 define('WA_CCPEF_PO_PLUGINPATH', '/' . dirname(plugin_basename( __FILE__ )));
-define('WA_CCPEF_TEXTDOMAIN', 'wace');
+define('WA_CCPEF_TEXTDOMAIN', 'wa-ccpef');
 
-add_action('plugins_loaded', 'wa_ccpef_load_textdomain');
+// Loaded on 'init' (not 'plugins_loaded') : since WP 6.7, translations loaded too early trigger a _doing_it_wrong notice
+add_action('init', 'wa_ccpef_load_textdomain', 1);
 function wa_ccpef_load_textdomain() {
 	load_plugin_textdomain( WA_CCPEF_TEXTDOMAIN, false, WA_CCPEF_PO_PLUGINPATH.'/languages/' );
 }

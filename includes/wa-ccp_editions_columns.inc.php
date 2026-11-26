@@ -31,7 +31,7 @@ function wa_ccpef_edition_columns() {
 
 // manage_edit-{$post_type}_columns
 function wa_ccpef_columns( $columns ) {
-	$columns['edition'] = __( 'Edition', 'wa_ccpef');
+	$columns['edition'] = __( 'Edition', 'wa-ccpef' );
 	return $columns;
 }
 
@@ -90,7 +90,7 @@ function groupby_post_id_for_edition( $groupby ) {
 
 // manage_edit-{$taxonomy}_columns
 function wa_ccpef_taxonomy_columns( $columns ) {
-	$columns[WA_CCPEF_MIGRATE_TAXONOMY_FIELD ? WA_CCPEF_MIGRATE_TAXONOMY_FIELD : 'wpcf-select-edition'] = __( 'Selected edition', 'wa_ccpef');
+	$columns[WA_CCPEF_MIGRATE_TAXONOMY_FIELD ? WA_CCPEF_MIGRATE_TAXONOMY_FIELD : 'wpcf-select-edition'] = __( 'Selected edition', 'wa-ccpef' );
 	return $columns;
 }
 
@@ -120,10 +120,10 @@ function wa_ccpef_taxonomy_edition_columns( $columns ) {
 	foreach($columns as $col_key => $col_title) {
 		print( $col_key );
 		if ($col_key=='name') // Put the Thumbnail column before the Title column
-			$newcols['e-image'] = __('<span class="dashicons-before dashicons-visibility" style="color:silver;"></span>', 'wa-ccpef');
+			$newcols['e-image'] = '<span class="dashicons-before dashicons-visibility" style="color:silver;" title="' . esc_attr__( 'Cover image', 'wa-ccpef' ) . '"></span>';
 		if ($col_key=='description') { // Put the Year, Current edition & Color columns before the Desc. column
-			$newcols['e-year'] = __('Year', 'wa_ccpef');
-			$newcols['e-current-edition'] = __('Current', 'wa_ccpef');
+			$newcols['e-year'] = __('Year', 'wa-ccpef' );
+			$newcols['e-current-edition'] = __('Current', 'wa-ccpef' );
 			$newcols['e-color'] = __('Color', 'wa-ccpef');
 		}
 		$newcols[$col_key] = $col_title;
@@ -200,7 +200,7 @@ function get_edition_post_terms($post_id, $taxonomy) {
 			echo '<span class="editions-tag"><span class="dashicons dashicons-image-filter" aria-hidden="true"></span> <a href="' . esc_url( $term_link ) . '">' . esc_html( $term->name ) . '</a></span>';
 		}
 	} else {
-		echo __( '<span style="color:silver;">—</span>' );
+		echo '<span style="color:silver;">—</span>';
 	}
 }
 
@@ -213,7 +213,7 @@ function get_edition_termmeta($taxonomy, $term_id) {
 	}
 	
 	if ( empty( $meta ) || is_wp_error( $meta ) ) //|| $term->name == '' 
-		echo __( '<span style="color:silver;">—</span>' );
+		echo '<span style="color:silver;">—</span>';
 	else {
 		foreach ( $meta as $term_id ) {
 			$term = get_term( $term_id, 'edition');
@@ -230,9 +230,9 @@ function get_edition_termmeta($taxonomy, $term_id) {
 function wa_ccpef_get_image_fromid($attachment_id) {
 	$image = wp_get_attachment_image_src( $attachment_id, 'thumbnail');
 	if ( empty( $image ) )
-		echo __( '<span class="empty">—</span>' ); // marker.png
+		echo '<span class="empty">—</span>'; // marker.png
 	else
-		printf( __( '<div class="tax-img-holder"><img class="wpcf-offre-visuel" src="%s" alt="Image" width="50" /></div>' ), $image[0] );
+		printf( '<div class="tax-img-holder"><img class="wpcf-offre-visuel" src="%s" alt="%s" width="50" /></div>', esc_url( $image[0] ), esc_attr__( 'Cover image', 'wa-ccpef' ) );
 }
 
 // Get current edition (checkbox)
@@ -240,13 +240,13 @@ function wa_ccpef_get_current_edition($fd) {
 	if ( empty( $fd ) )
 		echo '<span style="color:silver;">—</span>';
 	else
-		printf( '<span class="dashicons dashicons-yes" style="color:#00a32a;" title="%1$s"></span><span class="screen-reader-text">%1$s</span>', esc_attr__( 'Current edition', 'wa_ccpef' ) );
+		printf( '<span class="dashicons dashicons-yes" style="color:#00a32a;" title="%1$s"></span><span class="screen-reader-text">%1$s</span>', esc_attr__( 'Current edition', 'wa-ccpef' ) );
 }
 
 // Get color
 function wa_ccpef_get_color($fd) {
 	if ( empty( $fd ) )
-		echo __( '<span style="color:silver;">—</span>' ); // marker.png
+		echo '<span style="color:silver;">—</span>'; // marker.png
 	else
-		printf( __( '<div style="background-color:%s;border:1px solid #bababa;width:20px;height:20px;"></span>' ), $fd );
+		printf( '<div style="background-color:%s;border:1px solid #bababa;width:20px;height:20px;"></div>', esc_attr( $fd ) );
 }

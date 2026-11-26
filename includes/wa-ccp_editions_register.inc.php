@@ -11,35 +11,34 @@ if ( WA_CCPEF_MIGRATE === true ) {
 add_action( 'init', 'wa_ccpef_register_taxonomy', 10);
 function wa_ccpef_register_taxonomy() {
 	$labels = [
-		'name'                       => esc_html__( 'Editions', 'wa_ccpef' ),
-		'singular_name'              => esc_html__( 'Edition', 'wa_ccpef' ),
-		'menu_name'                  => esc_html__( 'Editions', 'wa_ccpef' ),
-		'search_items'               => esc_html__( 'Search Editions', 'wa_ccpef' ),
-		'popular_items'              => esc_html__( 'Popular Editions', 'wa_ccpef' ),
-		'all_items'                  => esc_html__( 'All Editions', 'wa_ccpef' ),
-		'parent_item'                => esc_html__( 'Parent Edition', 'wa_ccpef' ),
-		'parent_item_colon'          => esc_html__( 'Parent Edition:', 'wa_ccpef' ),
-		'edit_item'                  => esc_html__( 'Edit Edition', 'wa_ccpef' ),
-		'view_item'                  => esc_html__( 'View Edition', 'wa_ccpef' ),
-		'update_item'                => esc_html__( 'Update Edition', 'wa_ccpef' ),
-		'add_new_item'               => esc_html__( 'Add New Edition', 'wa_ccpef' ),
-		'new_item_name'              => esc_html__( 'New Edition Name', 'wa_ccpef' ),
-		'separate_items_with_commas' => esc_html__( 'Separate editions with commas', 'wa_ccpef' ),
-		'add_or_remove_items'        => esc_html__( 'Add or remove editions', 'wa_ccpef' ),
-		'choose_from_most_used'      => esc_html__( 'Choose most used editions', 'wa_ccpef' ),
-		'not_found'                  => esc_html__( 'No editions found.', 'wa_ccpef' ),
-		'no_terms'                   => esc_html__( 'No editions', 'wa_ccpef' ),
-		'filter_by_item'             => esc_html__( 'Filter by edition', 'wa_ccpef' ),
-		'items_list_navigation'      => esc_html__( 'Editions list pagination', 'wa_ccpef' ),
-		'items_list'                 => esc_html__( 'Editions list', 'wa_ccpef' ),
-		'most_used'                  => esc_html__( 'Most Used', 'wa_ccpef' ),
-		'back_to_items'              => esc_html__( '&larr; Go to Editions', 'wa_ccpef' ),
-		'text_domain'                => esc_html__( 'wa_ccpef', 'wa_ccpef' ),
+		'name'                       => esc_html__( 'Editions', 'wa-ccpef' ),
+		'singular_name'              => esc_html__( 'Edition', 'wa-ccpef' ),
+		'menu_name'                  => esc_html__( 'Editions', 'wa-ccpef' ),
+		'search_items'               => esc_html__( 'Search Editions', 'wa-ccpef' ),
+		'popular_items'              => esc_html__( 'Popular Editions', 'wa-ccpef' ),
+		'all_items'                  => esc_html__( 'All Editions', 'wa-ccpef' ),
+		'parent_item'                => esc_html__( 'Parent Edition', 'wa-ccpef' ),
+		'parent_item_colon'          => esc_html__( 'Parent Edition:', 'wa-ccpef' ),
+		'edit_item'                  => esc_html__( 'Edit Edition', 'wa-ccpef' ),
+		'view_item'                  => esc_html__( 'View Edition', 'wa-ccpef' ),
+		'update_item'                => esc_html__( 'Update Edition', 'wa-ccpef' ),
+		'add_new_item'               => esc_html__( 'Add New Edition', 'wa-ccpef' ),
+		'new_item_name'              => esc_html__( 'New Edition Name', 'wa-ccpef' ),
+		'separate_items_with_commas' => esc_html__( 'Separate editions with commas', 'wa-ccpef' ),
+		'add_or_remove_items'        => esc_html__( 'Add or remove editions', 'wa-ccpef' ),
+		'choose_from_most_used'      => esc_html__( 'Choose most used editions', 'wa-ccpef' ),
+		'not_found'                  => esc_html__( 'No editions found.', 'wa-ccpef' ),
+		'no_terms'                   => esc_html__( 'No editions', 'wa-ccpef' ),
+		'filter_by_item'             => esc_html__( 'Filter by edition', 'wa-ccpef' ),
+		'items_list_navigation'      => esc_html__( 'Editions list pagination', 'wa-ccpef' ),
+		'items_list'                 => esc_html__( 'Editions list', 'wa-ccpef' ),
+		'most_used'                  => esc_html__( 'Most Used', 'wa-ccpef' ),
+		'back_to_items'              => esc_html__( '&larr; Go to Editions', 'wa-ccpef' ),
 	];
 	$args = [
-		'label'              => esc_html__( 'Editions', 'wa_ccpef' ),
+		'label'              => esc_html__( 'Editions', 'wa-ccpef' ),
 		'labels'             => $labels,
-		'description'        => esc_html__( 'Categorizes post.s & taxonomy.s in a edition (year)', 'wa_ccpef' ),
+		'description'        => esc_html__( 'Categorizes post.s & taxonomy.s in a edition (year)', 'wa-ccpef' ),
 		'public'             => true,
 		'publicly_queryable' => true,
 		'hierarchical'       => true,
@@ -77,13 +76,13 @@ function wa_ccpef_register_taxonomy_fields( $meta_boxes ) {
     $prefix = 'waccpef-';
 
     $meta_boxes[] = [
-        'title'      => __( 'Edition › General', 'wa_ccpef' ),
+        'title'      => __( 'Edition › General', 'wa-ccpef' ),
         'id'         => 'edition-general',
         'taxonomies' => ['edition'],
         'class'      => 'wa_ccpef',
         'fields'     => [
             [
-                'name'              => __( 'Year', 'wa_ccpef' ),
+                'name'              => __( 'Year', 'wa-ccpef' ),
                 'id'                => $prefix . 'e-year',
                 'type'              => 'number',
                 'required'          => true,
@@ -94,10 +93,10 @@ function wa_ccpef_register_taxonomy_fields( $meta_boxes ) {
                 'hide_from_rest'    => false,
             ],
             [
-                'name'              => __( 'Current edition ?', 'wa_ccpef' ),
+                'name'              => __( 'Current edition ?', 'wa-ccpef' ),
                 'id'                => $prefix . 'e-current-edition',
                 'type'              => 'checkbox',
-                'label_description' => __( 'Check if this is the current edition', 'wa_ccpef' ),
+                'label_description' => __( 'Check if this is the current edition', 'wa-ccpef' ),
                 'std'               => false,
                 'required'          => false,
                 'clone'             => false,
@@ -105,7 +104,7 @@ function wa_ccpef_register_taxonomy_fields( $meta_boxes ) {
                 'hide_from_rest'    => false,
             ],
             [
-                'name'              => __( 'Start date', 'wa_ccpef' ),
+                'name'              => __( 'Start date', 'wa-ccpef' ),
                 'id'                => $prefix . 'e-start-date',
                 'type'              => 'date',
                 'timestamp'         => false,
@@ -118,7 +117,7 @@ function wa_ccpef_register_taxonomy_fields( $meta_boxes ) {
                 'hide_from_rest'    => false,
             ],
             [
-                'name'              => __( 'End date', 'wa_ccpef' ),
+                'name'              => __( 'End date', 'wa-ccpef' ),
                 'id'                => $prefix . 'e-end-date',
                 'type'              => 'date',
                 'timestamp'         => false,
@@ -131,10 +130,10 @@ function wa_ccpef_register_taxonomy_fields( $meta_boxes ) {
                 'hide_from_rest'    => false,
             ],
             [
-                'name'              => __( 'Color', 'wa_ccpef' ),
+                'name'              => __( 'Color', 'wa-ccpef' ),
                 'id'                => $prefix . 'e-color',
                 'type'              => 'color',
-                'label_description' => __( 'Choose an edition color', 'wa_ccpef' ),
+                'label_description' => __( 'Choose an edition color', 'wa-ccpef' ),
                 'alpha_channel'     => false,
                 'required'          => false,
                 'disabled'          => false,
@@ -144,10 +143,10 @@ function wa_ccpef_register_taxonomy_fields( $meta_boxes ) {
                 'hide_from_rest'    => false,
             ],
             [
-                'name'              => __( 'Cover image', 'wa_ccpef' ),
+                'name'              => __( 'Cover image', 'wa-ccpef' ),
                 'id'                => $prefix . 'e-image',
                 'type'              => 'image_advanced',
-                'label_description' => __( 'Choose an edition cover image', 'wa_ccpef' ),
+                'label_description' => __( 'Choose an edition cover image', 'wa-ccpef' ),
                 'max_file_uploads'  => 1,
                 'force_delete'      => false,
                 'required'          => false,
@@ -156,10 +155,10 @@ function wa_ccpef_register_taxonomy_fields( $meta_boxes ) {
                 'hide_from_rest'    => false,
             ],
             [
-                'name'              => __( 'Images', 'wa_ccpef' ),
+                'name'              => __( 'Images', 'wa-ccpef' ),
                 'id'                => $prefix . 'e-images',
                 'type'              => 'image_advanced',
-                'label_description' => __( 'Choose an edition slideshow images', 'wa_ccpef' ),
+                'label_description' => __( 'Choose an edition slideshow images', 'wa-ccpef' ),
                 'max_file_uploads'  => 3,
                 'force_delete'      => false,
                 'required'          => false,
@@ -168,7 +167,7 @@ function wa_ccpef_register_taxonomy_fields( $meta_boxes ) {
                 'hide_from_rest'    => false,
             ],
             [
-                'name'              => __( 'Content ( before )', 'wa_ccpef' ),
+                'name'              => __( 'Content ( before )', 'wa-ccpef' ),
                 'id'                => $prefix . 'e-content-before',
                 'type'              => 'wysiwyg',
                 'options'           => [
@@ -178,11 +177,11 @@ function wa_ccpef_register_taxonomy_fields( $meta_boxes ) {
                     'teeny' => true,
                     'textarea_rows'  => 4,
                 ],
-				'label_description' => __( '<span class="label">INFO</span> Fill with formatted text', 'wa_ccpef' ),
-				'desc' => __( '<span class="label">TIPS</span> This content will be showed after title', 'wa_ccpef' ),
+				'label_description' => __( '<span class="label">INFO</span> Fill with formatted text', 'wa-ccpef' ),
+				'desc' => __( '<span class="label">TIPS</span> This content will be showed after title', 'wa-ccpef' ),
             ],
             [
-                'name'              => __( 'Content ( after )', 'wa_ccpef' ),
+                'name'              => __( 'Content ( after )', 'wa-ccpef' ),
                 'id'                => $prefix . 'e-content-after',
                 'type'              => 'wysiwyg',
                 'options'           => [
@@ -192,8 +191,8 @@ function wa_ccpef_register_taxonomy_fields( $meta_boxes ) {
                     'teeny' => true,
                     'textarea_rows'  => 4,
                 ],
-				'label_description' => __( '<span class="label">INFO</span> Fill with formatted text', 'wa_ccpef' ),
-				'desc' => __( '<span class="label">TIPS</span> This content will be showed after edition posts', 'wa_ccpef' ),
+				'label_description' => __( '<span class="label">INFO</span> Fill with formatted text', 'wa-ccpef' ),
+				'desc' => __( '<span class="label">TIPS</span> This content will be showed after edition posts', 'wa-ccpef' ),
             ],
         ],
     ];
@@ -219,7 +218,7 @@ function wa_ccpef_taxonomies_field() {
 function wa_ccpef_add_term_fields( $taxonomy ) {
     ?>
         <div class="form-field waccpef-select-edition">
-            <label class="waccpef-select-edition_title" for="<?= WA_CCPEF_MIGRATE_TAXONOMY_FIELD?>"><?php esc_html_e( 'Select editions', 'wa_ccpef' ); ?></label>
+            <label class="waccpef-select-edition_title" for="<?= WA_CCPEF_MIGRATE_TAXONOMY_FIELD?>"><?php esc_html_e( 'Select editions', 'wa-ccpef' ); ?></label>
             <?php
             $terms = get_terms( [
                 'taxonomy'   => 'edition',
@@ -238,7 +237,7 @@ function wa_ccpef_add_term_fields( $taxonomy ) {
                 }
             }
             ?>
-            <p><?php esc_html_e( 'Select one or many editions from the list.', 'wa_ccpef' ); ?></p>
+            <p><?php esc_html_e( 'Select one or many editions from the list.', 'wa-ccpef' ); ?></p>
         </div>
     <?php
 }
@@ -248,7 +247,7 @@ function wa_ccpef_edit_term_fields( $term, $taxonomy ) {
     $selected_editions = get_term_meta( $term->term_id, WA_CCPEF_MIGRATE_TAXONOMY_FIELD, true );
     ?>
     <tr class="form-field waccpef-select-edition">
-        <th><label class="waccpef-select-edition_title" for="<?= WA_CCPEF_MIGRATE_TAXONOMY_FIELD?>"><?php esc_html_e( 'Select editions', 'wa_ccpef' ); ?></label></th>
+        <th><label class="waccpef-select-edition_title" for="<?= WA_CCPEF_MIGRATE_TAXONOMY_FIELD?>"><?php esc_html_e( 'Select editions', 'wa-ccpef' ); ?></label></th>
         <td>
             <?php
             $terms = get_terms( [
@@ -269,7 +268,7 @@ function wa_ccpef_edit_term_fields( $term, $taxonomy ) {
                 }
             }
             ?>
-            <p class="description"><?php esc_html_e( 'Select one or more editions from the list.', 'wa_ccpef' ); ?></p>
+            <p class="description"><?php esc_html_e( 'Select one or more editions from the list.', 'wa-ccpef' ); ?></p>
         </td>
     </tr>
     <?php

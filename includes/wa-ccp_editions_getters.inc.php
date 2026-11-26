@@ -80,7 +80,7 @@ function get_edition_vars() {
 
 function edition_admin_notice__error() {
 	$class = 'notice notice-error error-message';
-	$message = __( 'Oups ! Aucune édition en cours sélectionnée / No current edition selected', 'waaet' );
+	$message = __( 'Oops! No current edition selected', 'wa-ccpef' );
 	printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), '<span class="error-message dashicons-before dashicons-image-filter" aria-hidden="true"></span> ' . esc_html( $message ) ); 
 }
 
@@ -210,4 +210,28 @@ function getcurrentedition_func($atts, $content = ''){
   			return '';
   		break;
   	}
+}
+
+/**
+ * Translatable uppercase month abbreviation (e.g. "MAI" in fr_FR) used in edition date ranges
+ *
+ * @param int $month Month number (1-12)
+ * @return string
+ */
+function wa_ccpef_get_month_abbr( $month ) {
+	$months = [
+		1  => _x( 'JAN', 'month abbreviation', 'wa-ccpef' ),
+		2  => _x( 'FEB', 'month abbreviation', 'wa-ccpef' ),
+		3  => _x( 'MAR', 'month abbreviation', 'wa-ccpef' ),
+		4  => _x( 'APR', 'month abbreviation', 'wa-ccpef' ),
+		5  => _x( 'MAY', 'month abbreviation', 'wa-ccpef' ),
+		6  => _x( 'JUN', 'month abbreviation', 'wa-ccpef' ),
+		7  => _x( 'JUL', 'month abbreviation', 'wa-ccpef' ),
+		8  => _x( 'AUG', 'month abbreviation', 'wa-ccpef' ),
+		9  => _x( 'SEP', 'month abbreviation', 'wa-ccpef' ),
+		10 => _x( 'OCT', 'month abbreviation', 'wa-ccpef' ),
+		11 => _x( 'NOV', 'month abbreviation', 'wa-ccpef' ),
+		12 => _x( 'DEC', 'month abbreviation', 'wa-ccpef' ),
+	];
+	return isset( $months[ (int) $month ] ) ? $months[ (int) $month ] : '';
 }

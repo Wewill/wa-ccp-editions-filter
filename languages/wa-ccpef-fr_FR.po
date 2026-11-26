@@ -1,0 +1,466 @@
+# Translation template for WA CCP WAFF Edition Filter.
+# This file is distributed under the same license as the plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: WA CCP WAFF Edition Filter 2.0.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-26 16:24+0100\n"
+"PO-Revision-Date: 2026-11-26 00:00+0100\n"
+"Last-Translator: \n"
+"Language-Team: French\n"
+"Language: fr_FR\n"
+"X-Domain: wa-ccpef\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: archives/wa-ccp_editions_block.inc.php:42
+msgid "(WA) Editions"
+msgstr "(WA) Éditions"
+
+#: archives/wa-ccp_editions_block.inc.php:48
+msgid "Title"
+msgstr "Titre"
+
+#: archives/wa-ccp_editions_block.inc.php:50
+msgid "An awesome title"
+msgstr "Un super titre"
+
+#: archives/wa-ccp_editions_block.inc.php:55
+msgid "Subtitle"
+msgstr "Sous-titre"
+
+#: archives/wa-ccp_editions_block.inc.php:57
+msgid "An awesome subtitle"
+msgstr "Un super sous-titre"
+
+#: archives/wa-ccp_editions_block.inc.php:60
+msgid "Show edition header ?"
+msgstr "Afficher l'en-tête de l'édition ?"
+
+#: archives/wa-ccp_editions_block.inc.php:63
+msgid "Check if you want to display the edition  header"
+msgstr "Cochez pour afficher l'en-tête de l'édition"
+
+#: archives/wa-ccp_editions_block.inc.php:71
+msgid "Show current edition ?"
+msgstr "Afficher l'édition en cours ?"
+
+#: archives/wa-ccp_editions_block.inc.php:74
+msgid "Check if you want to display only the current edition"
+msgstr "Cochez pour n'afficher que l'édition en cours"
+
+#: archives/wa-ccp_editions_block.inc.php:82
+msgid "Displayed edition"
+msgstr "Édition affichée"
+
+#: archives/wa-ccp_editions_block.inc.php:92
+msgid "Displayed post type.s"
+msgstr "Type.s de contenu affiché.s"
+
+#: archives/wa-ccp_editions_block.inc.php:106
+msgid "Display all edition posts"
+msgstr "Affiche tous les contenus d'une édition"
+
+#: archives/wa-ccp_editions_block.inc.php:231
+#: templates/partials/header-artetjardins-hdf.php:267
+#: templates/partials/header.php:34
+msgid "Edition Image"
+msgstr "Image de l'édition"
+
+#: filter/wa-ccp_editions_filter.inc.php:286
+msgid "Show all editions"
+msgstr "Afficher toutes les éditions"
+
+#: filter/wa-ccp_editions_filter.inc.php:289
+msgid "OFFLINE"
+msgstr "HORS LIGNE"
+
+#: filter/wa-ccp_editions_filter.inc.php:289
+msgid "ONLINE"
+msgstr "EN LIGNE"
+
+#: includes/wa-ccp_editions_columns.inc.php:34
+#: includes/wa-ccp_editions_register.inc.php:15
+#: includes/wa-ccp_editions_settings.inc.php:15
+#: includes/wa-ccp_editions_settings.inc.php:54
+msgid "Edition"
+msgstr "Édition"
+
+#: includes/wa-ccp_editions_columns.inc.php:93
+msgid "Selected edition"
+msgstr "Édition sélectionnée"
+
+#: includes/wa-ccp_editions_columns.inc.php:123
+#: includes/wa-ccp_editions_columns.inc.php:235
+#: includes/wa-ccp_editions_register.inc.php:146
+msgid "Cover image"
+msgstr "Image de couverture"
+
+#: includes/wa-ccp_editions_columns.inc.php:125
+#: includes/wa-ccp_editions_register.inc.php:85
+msgid "Year"
+msgstr "Année"
+
+#: includes/wa-ccp_editions_columns.inc.php:126
+msgid "Current"
+msgstr "En cours"
+
+#: includes/wa-ccp_editions_columns.inc.php:127
+#: includes/wa-ccp_editions_register.inc.php:133
+msgid "Color"
+msgstr "Couleur"
+
+#: includes/wa-ccp_editions_columns.inc.php:243
+msgid "Current edition"
+msgstr "Édition en cours"
+
+#: includes/wa-ccp_editions_getters.inc.php:83
+msgid "Oops! No current edition selected"
+msgstr "Oups ! Aucune édition en cours sélectionnée"
+
+#: includes/wa-ccp_editions_getters.inc.php:223
+msgctxt "month abbreviation"
+msgid "JAN"
+msgstr "JAN"
+
+#: includes/wa-ccp_editions_getters.inc.php:224
+msgctxt "month abbreviation"
+msgid "FEB"
+msgstr "FEV"
+
+#: includes/wa-ccp_editions_getters.inc.php:225
+msgctxt "month abbreviation"
+msgid "MAR"
+msgstr "MAR"
+
+#: includes/wa-ccp_editions_getters.inc.php:226
+msgctxt "month abbreviation"
+msgid "APR"
+msgstr "AVR"
+
+#: includes/wa-ccp_editions_getters.inc.php:227
+msgctxt "month abbreviation"
+msgid "MAY"
+msgstr "MAI"
+
+#: includes/wa-ccp_editions_getters.inc.php:228
+msgctxt "month abbreviation"
+msgid "JUN"
+msgstr "JUN"
+
+#: includes/wa-ccp_editions_getters.inc.php:229
+msgctxt "month abbreviation"
+msgid "JUL"
+msgstr "JUI"
+
+#: includes/wa-ccp_editions_getters.inc.php:230
+msgctxt "month abbreviation"
+msgid "AUG"
+msgstr "AOU"
+
+#: includes/wa-ccp_editions_getters.inc.php:231
+msgctxt "month abbreviation"
+msgid "SEP"
+msgstr "SEP"
+
+#: includes/wa-ccp_editions_getters.inc.php:232
+msgctxt "month abbreviation"
+msgid "OCT"
+msgstr "OCT"
+
+#: includes/wa-ccp_editions_getters.inc.php:233
+msgctxt "month abbreviation"
+msgid "NOV"
+msgstr "NOV"
+
+#: includes/wa-ccp_editions_getters.inc.php:234
+msgctxt "month abbreviation"
+msgid "DEC"
+msgstr "DEC"
+
+#: includes/wa-ccp_editions_register.inc.php:14
+#: includes/wa-ccp_editions_register.inc.php:16
+#: includes/wa-ccp_editions_register.inc.php:39
+msgid "Editions"
+msgstr "Éditions"
+
+#: includes/wa-ccp_editions_register.inc.php:17
+msgid "Search Editions"
+msgstr "Rechercher des éditions"
+
+#: includes/wa-ccp_editions_register.inc.php:18
+msgid "Popular Editions"
+msgstr "Éditions populaires"
+
+#: includes/wa-ccp_editions_register.inc.php:19
+msgid "All Editions"
+msgstr "Toutes les éditions"
+
+#: includes/wa-ccp_editions_register.inc.php:20
+msgid "Parent Edition"
+msgstr "Édition parente"
+
+#: includes/wa-ccp_editions_register.inc.php:21
+msgid "Parent Edition:"
+msgstr "Édition parente :"
+
+#: includes/wa-ccp_editions_register.inc.php:22
+msgid "Edit Edition"
+msgstr "Modifier l'édition"
+
+#: includes/wa-ccp_editions_register.inc.php:23
+msgid "View Edition"
+msgstr "Voir l'édition"
+
+#: includes/wa-ccp_editions_register.inc.php:24
+msgid "Update Edition"
+msgstr "Mettre à jour l'édition"
+
+#: includes/wa-ccp_editions_register.inc.php:25
+msgid "Add New Edition"
+msgstr "Ajouter une édition"
+
+#: includes/wa-ccp_editions_register.inc.php:26
+msgid "New Edition Name"
+msgstr "Nom de la nouvelle édition"
+
+#: includes/wa-ccp_editions_register.inc.php:27
+msgid "Separate editions with commas"
+msgstr "Séparez les éditions par des virgules"
+
+#: includes/wa-ccp_editions_register.inc.php:28
+msgid "Add or remove editions"
+msgstr "Ajouter ou supprimer des éditions"
+
+#: includes/wa-ccp_editions_register.inc.php:29
+msgid "Choose most used editions"
+msgstr "Choisir parmi les éditions les plus utilisées"
+
+#: includes/wa-ccp_editions_register.inc.php:30
+msgid "No editions found."
+msgstr "Aucune édition trouvée."
+
+#: includes/wa-ccp_editions_register.inc.php:31
+msgid "No editions"
+msgstr "Aucune édition"
+
+#: includes/wa-ccp_editions_register.inc.php:32
+msgid "Filter by edition"
+msgstr "Filtrer par édition"
+
+#: includes/wa-ccp_editions_register.inc.php:33
+msgid "Editions list pagination"
+msgstr "Navigation de la liste des éditions"
+
+#: includes/wa-ccp_editions_register.inc.php:34
+msgid "Editions list"
+msgstr "Liste des éditions"
+
+#: includes/wa-ccp_editions_register.inc.php:35
+msgid "Most Used"
+msgstr "Les plus utilisées"
+
+#: includes/wa-ccp_editions_register.inc.php:36
+msgid "&larr; Go to Editions"
+msgstr "&larr; Aller aux éditions"
+
+#: includes/wa-ccp_editions_register.inc.php:41
+msgid "Categorizes post.s & taxonomy.s in a edition (year)"
+msgstr "Classe les contenus et taxonomies par édition (année)"
+
+#: includes/wa-ccp_editions_register.inc.php:79
+msgid "Edition › General"
+msgstr "Édition › Général"
+
+#: includes/wa-ccp_editions_register.inc.php:96
+msgid "Current edition ?"
+msgstr "Édition en cours ?"
+
+#: includes/wa-ccp_editions_register.inc.php:99
+msgid "Check if this is the current edition"
+msgstr "Cochez s'il s'agit de l'édition en cours"
+
+#: includes/wa-ccp_editions_register.inc.php:107
+msgid "Start date"
+msgstr "Date de début"
+
+#: includes/wa-ccp_editions_register.inc.php:120
+msgid "End date"
+msgstr "Date de fin"
+
+#: includes/wa-ccp_editions_register.inc.php:136
+msgid "Choose an edition color"
+msgstr "Choisissez une couleur pour l'édition"
+
+#: includes/wa-ccp_editions_register.inc.php:149
+msgid "Choose an edition cover image"
+msgstr "Choisissez une image de couverture pour l'édition"
+
+#: includes/wa-ccp_editions_register.inc.php:158
+msgid "Images"
+msgstr "Images"
+
+#: includes/wa-ccp_editions_register.inc.php:161
+msgid "Choose an edition slideshow images"
+msgstr "Choisissez les images du diaporama de l'édition"
+
+#: includes/wa-ccp_editions_register.inc.php:170
+msgid "Content ( before )"
+msgstr "Contenu ( avant )"
+
+#: includes/wa-ccp_editions_register.inc.php:180
+#: includes/wa-ccp_editions_register.inc.php:194
+msgid "<span class=\"label\">INFO</span> Fill with formatted text"
+msgstr "<span class=\"label\">INFO</span> Saisissez un texte mis en forme"
+
+#: includes/wa-ccp_editions_register.inc.php:181
+msgid "<span class=\"label\">TIPS</span> This content will be showed after title"
+msgstr "<span class=\"label\">ASTUCE</span> Ce contenu sera affiché après le titre"
+
+#: includes/wa-ccp_editions_register.inc.php:184
+msgid "Content ( after )"
+msgstr "Contenu ( après )"
+
+#: includes/wa-ccp_editions_register.inc.php:195
+msgid "<span class=\"label\">TIPS</span> This content will be showed after edition posts"
+msgstr "<span class=\"label\">ASTUCE</span> Ce contenu sera affiché après les contenus de l'édition"
+
+#: includes/wa-ccp_editions_register.inc.php:221
+#: includes/wa-ccp_editions_register.inc.php:250
+msgid "Select editions"
+msgstr "Sélectionner des éditions"
+
+#: includes/wa-ccp_editions_register.inc.php:240
+msgid "Select one or many editions from the list."
+msgstr "Sélectionnez une ou plusieurs éditions dans la liste."
+
+#: includes/wa-ccp_editions_register.inc.php:271
+msgid "Select one or more editions from the list."
+msgstr "Sélectionnez une ou plusieurs éditions dans la liste."
+
+#: includes/wa-ccp_editions_settings.inc.php:9
+msgid "Archives & edition filter"
+msgstr "Archives & filtre d'édition"
+
+#: includes/wa-ccp_editions_settings.inc.php:16
+#: includes/wa-ccp_editions_settings.inc.php:114
+#: templates/archives-edition.php:23
+msgid "Archives"
+msgstr "Archives"
+
+#: includes/wa-ccp_editions_settings.inc.php:17
+msgid "Template"
+msgstr "Modèle"
+
+#: includes/wa-ccp_editions_settings.inc.php:45
+msgid "Edition settings"
+msgstr "Réglages de l'édition"
+
+#: includes/wa-ccp_editions_settings.inc.php:51
+msgid "Choose edition filter name"
+msgstr "Nom du filtre d'édition"
+
+#: includes/wa-ccp_editions_settings.inc.php:64
+msgid "Allowed post type.s"
+msgstr "Type.s de contenu autorisé.s"
+
+#: includes/wa-ccp_editions_settings.inc.php:72
+msgid "Allowed taxonomy.s"
+msgstr "Taxonomie.s autorisée.s"
+
+#: includes/wa-ccp_editions_settings.inc.php:80
+msgid "Filter Medias by edition year ?"
+msgstr "Filtrer les médias par année d'édition ?"
+
+#: includes/wa-ccp_editions_settings.inc.php:83
+msgid "Check if you want to filter all medias by year of the edition, and switch between medias by switching edition"
+msgstr "Cochez pour filtrer tous les médias selon l'année de l'édition, et changer de médias en changeant d'édition"
+
+#: includes/wa-ccp_editions_settings.inc.php:91
+msgid "Current edition is online ?"
+msgstr "L'édition en cours est en ligne ?"
+
+#: includes/wa-ccp_editions_settings.inc.php:94
+msgid "Check if you want to show current edition online"
+msgstr "Cochez pour mettre l'édition en cours en ligne"
+
+#: includes/wa-ccp_editions_settings.inc.php:105
+msgid "Archives settings"
+msgstr "Réglages des archives"
+
+#: includes/wa-ccp_editions_settings.inc.php:111
+msgid "Choose archives name"
+msgstr "Nom des archives"
+
+#: includes/wa-ccp_editions_settings.inc.php:124
+msgid "Display posts ordered by post types ?"
+msgstr "Afficher les contenus groupés par type de contenu ?"
+
+#: includes/wa-ccp_editions_settings.inc.php:127
+msgid "Check if you want to display post types hierachy or a sinple list"
+msgstr "Cochez pour grouper les contenus par type de contenu, sinon une liste simple est affichée"
+
+#: includes/wa-ccp_editions_settings.inc.php:139
+msgid "Template settings"
+msgstr "Réglages du modèle"
+
+#: includes/wa-ccp_editions_settings.inc.php:145
+msgid "Override default with template name"
+msgstr "Remplacer le modèle par défaut par ce nom de modèle"
+
+#. translators: %s: edition name
+#: includes/wa-ccp_editions_shortcode.inc.php:70
+#, php-format
+msgid "%s poster"
+msgstr "Affiche %s"
+
+#: includes/wa-ccp_editions_shortcode.inc.php:75
+msgid "CURRENT EDITION"
+msgstr "EDITION EN COURS"
+
+#: includes/wa-ccp_editions_shortcode.inc.php:108
+msgctxt "current edition button"
+msgid "VIEW"
+msgstr "CONSULTER"
+
+#: includes/wa-ccp_editions_shortcode.inc.php:125
+msgid "See<br>previous editions"
+msgstr "Consultez<br>les éditions précédentes"
+
+#: templates/archives-edition.php:24
+msgid "Browse previous years"
+msgstr "Consulter les années précédentes"
+
+#: templates/partials/header-artetjardins-hdf.php:117
+msgid "Previous"
+msgstr "Précédent"
+
+#: templates/partials/header-artetjardins-hdf.php:118
+msgid "Next"
+msgstr "Suivant"
+
+#: templates/partials/header-artetjardins-hdf.php:161
+msgid "No slides found, please add some!"
+msgstr "Aucune diapositive trouvée, merci d'en ajouter !"
+
+#: templates/partials/header-artetjardins-hdf.php:301
+msgid "Creations"
+msgstr "Créations"
+
+#: templates/partials/header-artetjardins-hdf.php:302
+msgid "Artists"
+msgstr "Artistes"
+
+#: templates/partials/header-artetjardins-hdf.php:303
+msgid "Information"
+msgstr "Informations"
+
+#: templates/taxonomy-edition.php:99
+msgid "No posts found."
+msgstr "Aucun contenu trouvé."
+
+#: templates/taxonomy-edition.php:100
+msgid "There are no gardens in this edition yet..."
+msgstr "Il n'y a pas encore de jardins dans cette édition..."

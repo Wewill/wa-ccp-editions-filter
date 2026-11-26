@@ -39,28 +39,28 @@ function wa_ccpef_register_block( $meta_boxes ) {
     $prefix = 'wa_ccpef_';
 
     $meta_boxes[] = [
-		'title'          => esc_html__( '(WA) Editions', 'wa_ccpef' ),
+		'title'          => esc_html__( '(WA) Editions', 'wa-ccpef' ),
 		'id'             => 'wa-editions',
 		'fields'         => [
 			[
                 'id'   => $prefix . 'title',
                 'type' => 'text',
-                'name' => esc_html__( 'Title', 'wa_ccpef' ),
-                // 'std'  => esc_html__( 'An awesome edition', 'wa_ccpef' ),
-                'placeholder' => esc_html__( 'An awesome title', 'wa_ccpef' ),
+                'name' => esc_html__( 'Title', 'wa-ccpef' ),
+                // 'std'  => esc_html__( 'An awesome edition', 'wa-ccpef' ),
+                'placeholder' => esc_html__( 'An awesome title', 'wa-ccpef' ),
             ],
             [
                 'id'   => $prefix . 'subtitle',
                 'type' => 'text',
-                'name' => esc_html__( 'Subtitle', 'wa_ccpef' ),
-                // 'std'  => esc_html__( 'Edito', 'wa_ccpef' ),
-				'placeholder' => esc_html__( 'An awesome subtitle', 'wa_ccpef' ),
+                'name' => esc_html__( 'Subtitle', 'wa-ccpef' ),
+                // 'std'  => esc_html__( 'Edito', 'wa-ccpef' ),
+				'placeholder' => esc_html__( 'An awesome subtitle', 'wa-ccpef' ),
 			],
             [
-                'name'              => __( 'Show edition header ?', 'wa_ccpef' ),
+                'name'              => __( 'Show edition header ?', 'wa-ccpef' ),
                 'id'                => $prefix . 'header',
                 'type'              => 'switch',
-                'label_description' => __( 'Check if you want to display the edition  header', 'wa_ccpef' ),
+                'label_description' => __( 'Check if you want to display the edition  header', 'wa-ccpef' ),
                 'std'               => true,
                 'required'          => false,
                 'clone'             => false,
@@ -68,10 +68,10 @@ function wa_ccpef_register_block( $meta_boxes ) {
                 'hide_from_rest'    => false,
             ],
             [
-                'name'              => __( 'Show current edition ?', 'wa_ccpef' ),
+                'name'              => __( 'Show current edition ?', 'wa-ccpef' ),
                 'id'                => $prefix . 'current_edition',
                 'type'              => 'switch',
-                'label_description' => __( 'Check if you want to display only the current edition', 'wa_ccpef' ),
+                'label_description' => __( 'Check if you want to display only the current edition', 'wa-ccpef' ),
                 'std'               => true,
                 'required'          => false,
                 'clone'             => false,
@@ -79,7 +79,7 @@ function wa_ccpef_register_block( $meta_boxes ) {
                 'hide_from_rest'    => false,
             ],
 			[
-                'name'            => __( 'Displayed edition', 'wa_ccpef' ),
+                'name'            => __( 'Displayed edition', 'wa-ccpef' ),
                 'id'              => $prefix . 'displayed_edition',
                 'type'            => 'select',
                 'inline'          => true,
@@ -89,7 +89,7 @@ function wa_ccpef_register_block( $meta_boxes ) {
 
             ],
 			[
-                'name'            => __( 'Displayed post type.s', 'wa_ccpef' ),
+                'name'            => __( 'Displayed post type.s', 'wa-ccpef' ),
                 'id'              => $prefix . 'displayed_post_types',
                 'type'            => 'checkbox_list',
                 'inline'          => true,
@@ -103,7 +103,7 @@ function wa_ccpef_register_block( $meta_boxes ) {
 			'foreground' 	=> '#9a7300',
 			'src' 			=> 'image-filter',
 		],
-		'description'     => esc_html__( 'Display all edition posts', 'wa_ccpef' ),
+		'description'     => esc_html__( 'Display all edition posts', 'wa-ccpef' ),
 		'keywords'       => ['post', 'content'],
 		'supports'       => [
 			'anchor'          => true,

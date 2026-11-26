@@ -20,8 +20,8 @@ $order_by_post_types = wa_ccpef_get_orderbyposttypes_from_setting_page();
 get_header(); ?>
 
 <main class="container page-content">
-    <h1>Archives</h1>
-    <h5>Consulter les années précédents</h5>
+    <h1><?php esc_html_e( 'Archives', 'wa-ccpef' ); ?></h1>
+    <h5><?php esc_html_e( 'Browse previous years', 'wa-ccpef' ); ?></h5>
 
     <?php
     // Edition : name, description, custom fields :  waccpef-e-year, waccpef-e-current-edition, waccpef-e-start-date, waccpef-e-end-date, waccpef-e-color, waccpef-e-image

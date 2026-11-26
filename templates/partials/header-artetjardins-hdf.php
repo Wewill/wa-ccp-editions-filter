@@ -23,12 +23,8 @@
         $start = DateTime::createFromFormat('Y-m-d', $edition_start_date);
         $end = DateTime::createFromFormat('Y-m-d', $edition_end_date);
         if ($start && $end) {
-            $months = [
-                1 => 'JAN', 2 => 'FEV', 3 => 'MAR', 4 => 'AVR', 5 => 'MAI', 6 => 'JUN',
-                7 => 'JUI', 8 => 'AOU', 9 => 'SEP', 10 => 'OCT', 11 => 'NOV', 12 => 'DEC'
-            ];
-            $start_str = $start->format('j') . ' ' . $months[(int)$start->format('n')];
-            $end_str = $end->format('j') . ' ' . $months[(int)$end->format('n')] . ' ' . $end->format('Y');
+            $start_str = $start->format('j') . ' ' . wa_ccpef_get_month_abbr($start->format('n'));
+            $end_str = $end->format('j') . ' ' . wa_ccpef_get_month_abbr($end->format('n')) . ' ' . $end->format('Y');
             $edition_date_string = $start_str . ' - ' . $end_str;
         }
     }
@@ -118,8 +114,8 @@
         if ( $type == "slider" && ($slide_count > 1 || $slide_count == -1) && ( $nav == "1" || $nav == "yes" || $nav == "true" ) ) {
             $ss_prev_icon = apply_filters('wa_slider_prev_icon', '<i class="ss-navigateleft"></i>');
             $ss_next_icon = apply_filters('wa_slider_next_icon', '<i class="ss-navigateright"></i>');
-            $wa_slider_output .= '<a class="wa-slider-prev" href="#">'.$ss_prev_icon.'<h4>' . __( 'Previous', 'swift-framework-plugin' ) . '</h4></a>';
-            $wa_slider_output .= '<a class="wa-slider-next" href="#">'.$ss_next_icon.'<h4>' . __( 'Next', 'swift-framework-plugin' ) . '</h4></a>';
+            $wa_slider_output .= '<a class="wa-slider-prev" href="#">'.$ss_prev_icon.'<h4>' . __( 'Previous', 'wa-ccpef' ) . '</h4></a>';
+            $wa_slider_output .= '<a class="wa-slider-next" href="#">'.$ss_next_icon.'<h4>' . __( 'Next', 'wa-ccpef' ) . '</h4></a>';
         }
 
         if ( $slide_count > 1 && ( $pagination == "1" || $pagination == "yes" || $pagination == "true" ) ) {
@@ -162,7 +158,7 @@
     } else {
 
         $wa_slider_output .= '<div id="' . $sliderID . '" class="wa-slider no-slides">';
-        $wa_slider_output .= __( "No slides found, please add some!", 'swift-framework-plugin' );
+        $wa_slider_output .= __( "No slides found, please add some!", 'wa-ccpef' );
         $wa_slider_output .= '</div>';
 
     }
@@ -302,9 +298,9 @@ if (isset($show_page_title) && !$show_page_title) {
                     <div class="spb-asset-content">
                         <div class="spb_anchors" style="--display:none;">
                             <ul class="nav nav-anchors">
-                                <li><a href="#creations" data-toggle="tab"><span>Créations</span></a></li>
-                                <li><a href="#artistes" data-toggle="tab"><span>Artistes</span></a></li>
-                                <li><a href="#informations" data-toggle="tab"><span>Informations</span></a></li>
+                                <li><a href="#creations" data-toggle="tab"><span><?php esc_html_e( 'Creations', 'wa-ccpef' ); ?></span></a></li>
+                                <li><a href="#artistes" data-toggle="tab"><span><?php esc_html_e( 'Artists', 'wa-ccpef' ); ?></span></a></li>
+                                <li><a href="#informations" data-toggle="tab"><span><?php esc_html_e( 'Information', 'wa-ccpef' ); ?></span></a></li>
                             </ul>
                         </div>
                     </div>
