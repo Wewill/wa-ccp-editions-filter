@@ -64,7 +64,11 @@ get_header(); ?>
             $end = $end_date ? date_i18n('d M Y', strtotime($end_date)) : '';
             $date_range = ($start && $end) ? "$start - $end" : '';
 
-            echo '<div class="edition-card">';
+            // Card link to single edition (taxonomy-edition.php)
+            $term_link = get_term_link($term);
+            $has_link = !is_wp_error($term_link);
+
+            echo $has_link ? '<a class="edition-card" href="' . esc_url($term_link) . '">' : '<div class="edition-card">';
             if ($image_url) {
                 echo '<div class="edition-image"><img src="' . esc_url($image_url) . '" alt="' . $name . '"></div>';
             }
@@ -82,7 +86,7 @@ get_header(); ?>
                 echo '<h3 class="edition-dates">' . esc_html($date_range) . '</h3>';
             }
             echo '</div>';
-            echo '</div>';
+            echo $has_link ? '</a>' : '</div>';
         }
         echo '</div><div class="clearfix"></div>';
     }
@@ -105,6 +109,16 @@ get_header(); ?>
         flex-direction: column;
         align-items: stretch;
         padding-bottom: 1.5rem;
+    }
+    a.edition-card {
+        color: inherit;
+        text-decoration: none;
+        transition: box-shadow .2s ease, transform .2s ease;
+    }
+    a.edition-card:hover,
+    a.edition-card:focus-visible {
+        box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        transform: translateY(-3px);
     }
     .edition-image img {
         width: 100%;
