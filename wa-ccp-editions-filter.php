@@ -5,7 +5,7 @@ Plugin Name: WA CCP WAFF Edition Filter
 Plugin URI: http://www.wilhemarnoldy.fr
 Description: Adds an Edition filter and an archives system to the admin head and filter selected posts and taxonomies
 Author: Wilhem Arnoldy & Justin Petermann ( concipio )
-Version: 2.0.1
+Version: 2.0.2
 Author URI: http://www.wilhemarnoldy.fr
 Text Domain: wa-ccpef
 Domain Path: /languages
@@ -37,7 +37,7 @@ if ( !is_login() && is_admin() && !function_exists('mb_settings_page_load') ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define('WA_CCPEF_VERSION', '2.0.1');
+define('WA_CCPEF_VERSION', '2.0.2');
 define('WA_CCPEF_DEBUG', false);
 
 // Load text domain
