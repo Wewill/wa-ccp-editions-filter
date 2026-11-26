@@ -114,17 +114,17 @@ function wa_ccpef_taxonomy_custom_column($out, $column_name, $term_id) {
 
 add_filter( 'manage_edit-edition_columns', 'wa_ccpef_taxonomy_edition_columns' ) ;
 function wa_ccpef_taxonomy_edition_columns( $columns ) {
-	//$columns['p_general_image'] = __( 'Image', 'wa-rsfp');
+	//$columns['p_general_image'] = __( 'Image', 'wa-ccpef');
 
 	$newcols = array();
 	foreach($columns as $col_key => $col_title) {
 		print( $col_key );
 		if ($col_key=='name') // Put the Thumbnail column before the Title column
-			$newcols['e-image'] = __('<span class="dashicons-before dashicons-visibility" style="color:silver;"></span>', 'wa-rsfp');
+			$newcols['e-image'] = __('<span class="dashicons-before dashicons-visibility" style="color:silver;"></span>', 'wa-ccpef');
 		if ($col_key=='description') { // Put the Year, Current edition & Color columns before the Desc. column
 			$newcols['e-year'] = __('Year', 'wa_ccpef');
 			$newcols['e-current-edition'] = __('Current', 'wa_ccpef');
-			$newcols['e-color'] = __('Color', 'wa-rsfp');
+			$newcols['e-color'] = __('Color', 'wa-ccpef');
 		}
 		$newcols[$col_key] = $col_title;
 	}
